@@ -1,0 +1,49 @@
+server:
+  port: ${APP_PORT:8081}
+spring:
+  application:
+    name: ${APP_NAME:SUBSCRIPTION}
+
+  datasource:
+    url: jdbc:postgresql://${subscription.rdbms.server}:${subscription.rdbms.port}/${subscription.rdbms.schema}
+    username: ${subscription.rdbms.username}
+    password: ${subscription.rdbms.pass}
+
+    hikari:
+      minimum-idle: ${DB_MIN_IDLE:1}
+      maximum-pool-size: ${DB_POOL:6}
+      leak-detection-threshold: {LEAK_DETECTION_THR:30000}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${ORM_MIGRATION:create}
+    show-sql: ${DB_LOG:true}
+    properties:
+      hibernate.format_sql: ${FORMAT_DB_LOG:true}
+    open-in-view: off
+
+subscription:
+
+  domain-event-channel: ${DOMAIN_EVENT_CHANNEL:DOMAIN_EVENTS}
+  dead-letter-channel: ${DEAD_LETTER_CHANNEL:DEAD_LETTER}
+
+  rdbms:
+    server: ${DB_SERVER:localhost}
+    port: ${DB_PORT:5432}
+    schema: ${DB_SCHEMA:test1}
+    username: ${DB_USER:test1}
+    pass: ${DB_PASS:test1}
+
+  kafka:
+    kafka-hosts: ${KAFKA_HOSTS:localhost:9092}
+    partitions: ${KAFKA_PARTITIONS:4}
+    replicas: ${KAFKA_REPLICAS:1}
+    timeout: ${KAFKA_TIMEOUT:6000}
+    fail-fast: ${KAFKA_FAIL_FAST:true}
+    retention: ${KAFKA_RETENTION:1}
+
+  cdc:
+    connector-class: ${CDC_CONNECTOR_CLASS:io.debezium.connector.postgresql.PostgresConnector}
+    offset-file: ${CDC_OFFSET_FILE:~/cdc-offset.dat}
+    flush-interval: ${CDC_FLUSH_INTERVAL:60000}
+    outbox-table: ${CDC_OUTBOX_TABLE:public.TBL_OUTBOX}
