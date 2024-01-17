@@ -1,0 +1,31 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+
+      - name: Build artifact
+        run: mvn -e -U clean package spring-boot:repackage -DskipTests --file pom.xml
+
+      - name: Build and Push Docker Image
+          env:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          run: |
+            docker build -t sahand1990j/subscription:latest .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push sahand1990j/subscription:latest
