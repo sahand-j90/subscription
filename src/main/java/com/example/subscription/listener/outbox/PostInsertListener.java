@@ -1,4 +1,4 @@
-package com.example.subscription.listener;
+package com.example.subscription.listener.outbox;
 
 import com.example.subscription.listener.DomainEvent;
 import org.hibernate.event.spi.PostInsertEvent;
@@ -21,7 +21,8 @@ public abstract class PostInsertListener<T> {
 
     public final void onPostInsert(PostInsertEvent event) {
         var domainEvents = onPostInsert((T) event.getEntity(), event);
-        domainEvents.stream().peek(domainEvent -> domainEvent.setSession(event.getSession()))
+        domainEvents.stream()
+                .peek(domainEvent -> domainEvent.setSession(event.getSession()))
                 .forEach(eventPublisher::publishEvent);
     }
 

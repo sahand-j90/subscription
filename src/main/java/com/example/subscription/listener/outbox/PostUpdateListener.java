@@ -1,4 +1,4 @@
-package com.example.subscription.listener;
+package com.example.subscription.listener.outbox;
 
 import com.example.subscription.listener.DomainEvent;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * @author Sahand Jalilvand 16.01.24
@@ -29,14 +31,22 @@ public abstract class PostUpdateListener<T> {
 
     public abstract Class<T> getType();
 
-    public final void onPostUpdate(PostUpdateEvent event) {
-        var domainEvents = onPostUpdate((T) event.getEntity(), event);
-        domainEvents.forEach(eventPublisher::publishEvent);
+    public final void onPostUpdate(final PostUpdateEvent event) {
+
+        Predicate<String> isPropertyChangedClosure = propertyName -> isPropertyChanged(event, propertyName);
+
+        Function<String, Object> getOldValueClosure = propertyName -> getOldValue(event, propertyName);
+
+        var domainEvents = onPostUpdate((T) event.getEntity(), isPropertyChangedClosure, getOldValueClosure);
+
+        domainEvents.stream()
+                .peek(domainEvent -> domainEvent.setSession(event.getSession()))
+                .forEach(eventPublisher::publishEvent);
     }
 
-    protected abstract List<DomainEvent<?>> onPostUpdate(T t, PostUpdateEvent event);
+    protected abstract List<DomainEvent<?>> onPostUpdate(T t,  Predicate<String> isPropertyChanged, Function<String, Object> getOldValue);
 
-    protected final boolean isPropertyChanged(PostUpdateEvent event, final String propertyName, Object newValue) {
+    private boolean isPropertyChanged(PostUpdateEvent event, final String propertyName) {
 
         var indexOfProperty = propertyIndexMap.get(propertyName);
         var dirtyProperties = event.getDirtyProperties();
@@ -47,7 +57,8 @@ public abstract class PostUpdateListener<T> {
 
             if (isChanged) {
 
-                var oldValue = getOldValue(event, propertyName);
+                var newValue = event.getState()[indexOfProperty];
+                var oldValue = event.getOldState()[indexOfProperty];
 
                 if (newValue == null && oldValue == null) {
                     return false;
@@ -62,7 +73,7 @@ public abstract class PostUpdateListener<T> {
         return false;
     }
 
-    protected final Object getOldValue(PostUpdateEvent event, String propertyName) {
+    private Object getOldValue(PostUpdateEvent event, String propertyName) {
         var indexOfProperty = propertyIndexMap.get(propertyName);
         return event.getOldState()[indexOfProperty];
     }

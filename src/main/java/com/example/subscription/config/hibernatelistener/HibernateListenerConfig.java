@@ -1,7 +1,7 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.PostInsertListener;
-import com.example.subscription.listener.PostUpdateListener;
+import com.example.subscription.listener.outbox.PostInsertListener;
+import com.example.subscription.listener.outbox.PostUpdateListener;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

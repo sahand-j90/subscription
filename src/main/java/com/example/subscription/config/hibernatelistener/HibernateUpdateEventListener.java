@@ -1,6 +1,6 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.PostUpdateListener;
+import com.example.subscription.listener.outbox.PostUpdateListener;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
