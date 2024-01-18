@@ -1,5 +1,6 @@
 package com.example.subscription.config.cdc;
 
+import com.example.subscription.outbox.core.ChangedDataCollector;
 import io.debezium.embedded.EmbeddedEngine;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -15,15 +16,15 @@ import java.util.concurrent.Executors;
  */
 @Component
 @Slf4j
-public class CdcListener {
+public class CdcEngine {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     private final EmbeddedEngine engine;
 
-    public CdcListener(Properties cdcConnector, CdcEventHandler cdcEventHandler) {
+    public CdcEngine(Properties cdcConnector, ChangedDataCollector changedDataCollector) {
         this.engine = (EmbeddedEngine) new EmbeddedEngine.EngineBuilder()
-                .notifying(cdcEventHandler::handleEvent)
+                .notifying(changedDataCollector::handleEvent)
                 .using(cdcConnector)
                 .build();
     }

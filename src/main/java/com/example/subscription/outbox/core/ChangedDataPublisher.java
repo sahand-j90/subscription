@@ -20,7 +20,7 @@ import java.util.UUID;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class CdcService {
+public class ChangedDataPublisher {
 
     @Value("${subscription.domain-event-channel")
     private String domainEventChannel;

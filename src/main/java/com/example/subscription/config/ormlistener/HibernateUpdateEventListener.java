@@ -1,4 +1,4 @@
-package com.example.subscription.config.hibernatelistener;
+package com.example.subscription.config.ormlistener;
 
 import com.example.subscription.outbox.core.AbstractPostUpdateListener;
 import lombok.RequiredArgsConstructor;

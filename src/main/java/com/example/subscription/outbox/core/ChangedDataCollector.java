@@ -1,6 +1,6 @@
-package com.example.subscription.config.cdc;
+package com.example.subscription.outbox.core;
 
-import com.example.subscription.outbox.core.CdcService;
+import com.example.subscription.outbox.core.ChangedDataPublisher;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,9 +21,9 @@ import static java.util.stream.Collectors.toMap;
  */
 @Component
 @RequiredArgsConstructor
-public class CdcEventHandler {
+public class ChangedDataCollector {
 
-    private final CdcService cdcService;
+    private final ChangedDataPublisher changedDataPublisher;
 
     public void handleEvent(SourceRecord sourceRecord) {
 
@@ -43,7 +43,7 @@ public class CdcEventHandler {
                         .map(fieldName -> Pair.of(fieldName, struct.get(fieldName)))
                         .collect(toMap(Pair::getKey, Pair::getValue));
 
-                cdcService.publish(payload);
+                changedDataPublisher.publish(payload);
             }
         }
     }
