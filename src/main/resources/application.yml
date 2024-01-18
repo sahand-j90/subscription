@@ -3,7 +3,6 @@ server:
 spring:
   application:
     name: ${APP_NAME:SUBSCRIPTION}
-
   datasource:
     url: jdbc:postgresql://${subscription.rdbms.server}:${subscription.rdbms.port}/${subscription.rdbms.schema}
     username: ${subscription.rdbms.username}
@@ -20,7 +19,8 @@ spring:
     show-sql: ${DB_LOG:true}
     properties:
       hibernate.format_sql: ${FORMAT_DB_LOG:true}
-    open-in-view: off
+
+    open-in-view: false
 
 subscription:
 

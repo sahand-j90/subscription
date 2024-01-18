@@ -80,7 +80,7 @@ public class KafkaConfig {
     @Slf4j
     static class KafkaTopics implements InitializingBean {
 
-        @Value("${subscription.domain-event-channel")
+        @Value("${subscription.domain-event-channel}")
         private String domainEventChannel;
 
         private final KafkaAdmin kafkaAdmin;

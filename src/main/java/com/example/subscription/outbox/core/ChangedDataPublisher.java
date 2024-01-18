@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChangedDataPublisher {
 
-    @Value("${subscription.domain-event-channel")
+    @Value("${subscription.domain-event-channel}")
     private String domainEventChannel;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
