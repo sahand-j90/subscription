@@ -26,7 +26,7 @@ import java.util.UUID;
 @Builder
 public class SubscriptionEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID")
     private UUID id;
 

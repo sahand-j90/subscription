@@ -24,8 +24,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @NamedNativeQuery(name = OutboxEntity.INSERT,
-        query = "INSERT INTO tbl_outbox (idempotent_key, created_at, channel, correlation_id, domain, event_type, message_data, span_id)\n" +
-                "VALUES (:idempotentKey, :createdAt, :channel, :correlationId, :domain, :eventType, :messageData, :spanId)", resultClass = Void.class)
+        query = "INSERT INTO tbl_outbox (idempotent_key, created_at, correlation_id, domain, event_type, message_data, span_id)\n" +
+                "VALUES (:idempotentKey, :createdAt, :correlationId, :domain, :eventType, :messageData, :spanId)", resultClass = Void.class)
 public class OutboxEntity {
 
     public static final String INSERT = "OutboxEntity_insert";
@@ -38,10 +38,6 @@ public class OutboxEntity {
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
-
-    @JsonIgnore
-    @Column(name = "channel", nullable = false)
-    private String channel;
 
     @Column(name = "correlation_id", nullable = false)
     private String correlationId;

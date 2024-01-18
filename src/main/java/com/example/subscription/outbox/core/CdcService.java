@@ -22,6 +22,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CdcService {
 
+    @Value("${subscription.domain-event-channel")
+    private String domainEventChannel;
+
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
@@ -33,7 +36,7 @@ public class CdcService {
 
         var content = createContent(outboxEntity);
 
-        kafkaTemplate.send(outboxEntity.getChannel(), outboxEntity.getCorrelationId(), content)
+        kafkaTemplate.send(domainEventChannel, outboxEntity.getCorrelationId(), content)
                 .whenComplete((result, ex) -> {
 
                     setSpanId(outboxEntity.getSpanId());
@@ -57,7 +60,6 @@ public class CdcService {
 
         var outbox = OutboxEntity.builder()
                 .idempotentKey(UUID.fromString((String) payload.get("idempotent_key")))
-                .channel((String) payload.get("channel"))
                 .correlationId((String) payload.get("correlation_id"))
                 .createdAt(new Date((long) payload.get("created_at")))
                 .eventType((String) payload.get("event_type"))

@@ -17,8 +17,6 @@ public class DomainEvent<T> {
 
     String correlationId;
 
-    String channel;
-
     String domain;
 
     String eventType;

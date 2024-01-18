@@ -1,8 +1,6 @@
 package com.example.subscription.outbox.core;
 
 import com.example.subscription.config.props.KafkaPropsHolder;
-import com.example.subscription.domains.ApplicationEntity;
-import com.example.subscription.services.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +9,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
 import org.apache.kafka.common.errors.TopicExistsException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Component;
 
@@ -27,17 +26,15 @@ import java.util.concurrent.ExecutionException;
 public class OutboxChannelService implements InitializingBean {
 
 
+    @Value("${subscription.domain-event-channel")
+    private String domainEventChannel;
+
     private final KafkaAdmin kafkaAdmin;
     private final KafkaPropsHolder kafkaPropsHolder;
 
-    private final ApplicationService applicationService;
-
     @Override
     public void afterPropertiesSet() {
-        applicationService.getAll()
-                .stream()
-                .map(ApplicationEntity::getChannel)
-                .forEach(this::createTopic);
+        createTopic(domainEventChannel);
     }
 
     @SneakyThrows

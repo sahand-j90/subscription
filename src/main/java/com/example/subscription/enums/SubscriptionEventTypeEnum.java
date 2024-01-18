@@ -3,11 +3,12 @@ package com.example.subscription.enums;
 /**
  * @author Sahand Jalilvand 18.01.24
  */
-public enum SubscriptionStateEnum {
+public enum SubscriptionEventTypeEnum {
 
-    RESERVED,
+    CREATED,
 
-    ACTIVE,
+    ACTIVATED,
 
-    FINISHED
+    EXPIRED
+
 }

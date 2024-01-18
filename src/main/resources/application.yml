@@ -24,6 +24,8 @@ spring:
 
 subscription:
 
+  domain-event-channel: ${DOMAIN_EVENT_CHANNEL:DOMAIN_EVENTS}
+
   rdbms:
     server: ${DB_SERVER:localhost}
     port: ${DB_PORT:5432}

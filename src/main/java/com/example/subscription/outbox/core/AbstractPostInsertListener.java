@@ -20,12 +20,12 @@ public abstract class AbstractPostInsertListener<T> {
     public abstract Class<T> getType();
 
     public final void onPostInsert(PostInsertEvent event) {
-        var domainEvents = onPostInsert((T) event.getEntity(), event);
+        var domainEvents = onPostInsert((T) event.getEntity());
         domainEvents.stream()
                 .peek(domainEvent -> domainEvent.setSession(event.getSession()))
                 .forEach(eventPublisher::publishEvent);
     }
 
-    protected abstract List<DomainEvent<?>> onPostInsert(T t, PostInsertEvent event);
+    protected abstract List<DomainEvent<?>> onPostInsert(T t);
 
 }

@@ -25,7 +25,7 @@ import java.util.UUID;
 @Builder
 public class SubscriberEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID")
     private UUID id;
 
@@ -41,12 +41,8 @@ public class SubscriberEntity {
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "APPLICATION_ID",
-            referencedColumnName = "ID",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "FK_SUBSCRIBER_OF_APPLICATION"))
-    private ApplicationEntity application;
+    @Column(name = "SUBSCRIBER_NAME", nullable = false)
+    private String subscriberName;
 
     @OneToMany(mappedBy = "subscriber")
     private List<SubscriptionEntity> subscriptions;

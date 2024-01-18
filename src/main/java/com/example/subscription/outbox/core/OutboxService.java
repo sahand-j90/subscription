@@ -33,7 +33,6 @@ public class OutboxService {
         var outbox = OutboxEntity.builder()
                 .idempotentKey(UUID.randomUUID())
                 .createdAt(new Date())
-                .channel(domainEvent.getChannel())
                 .correlationId(domainEvent.getCorrelationId())
                 .domain(domainEvent.getDomain())
                 .eventType(domainEvent.getEventType())
@@ -53,7 +52,6 @@ public class OutboxService {
         query.setParameter("eventType", outbox.getEventType());
         query.setParameter("messageData", outbox.getMessageData());
         query.setParameter("spanId", outbox.getSpanId());
-        query.setParameter("channel", outbox.getChannel());
         query.setFlushMode(FlushModeType.COMMIT);
         query.executeUpdate();
     }
