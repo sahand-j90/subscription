@@ -35,7 +35,7 @@ public class SubscriberResource {
 
     @PutMapping
     public ResponseEntity<SubscriberDto> update(@RequestBody @Valid UpdateSubscriberDto dto) {
-        var response = subscriberService.create(dto);
+        var response = subscriberService.update(dto);
         return ResponseEntity.ok(response);
     }
 }

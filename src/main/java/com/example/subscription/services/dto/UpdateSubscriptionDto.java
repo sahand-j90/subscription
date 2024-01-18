@@ -1,11 +1,12 @@
 package com.example.subscription.services.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -15,14 +16,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateSubscriberDto {
+public class UpdateSubscriptionDto {
 
-    @NotEmpty
+    @NotNull
     private UUID id;
 
-    @NotEmpty
+    @NotNull
     private int version;
 
-    @NotEmpty
-    private String subscriberName;
+    private LocalDate from;
+
+    private LocalDate to;
 }

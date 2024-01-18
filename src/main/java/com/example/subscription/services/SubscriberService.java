@@ -1,10 +1,13 @@
 package com.example.subscription.services;
 
+import com.example.subscription.domains.SubscriberEntity;
 import com.example.subscription.repositories.SubscriberRepository;
 import com.example.subscription.services.dto.CreateSubscriberDto;
 import com.example.subscription.services.dto.SubscriberDto;
 import com.example.subscription.services.dto.UpdateSubscriberDto;
 import com.example.subscription.services.mapper.SubscriberMapper;
+import com.example.subscription.services.validators.Validator;
+import com.example.subscription.services.validators.SubscriberNameAlreadyExistsValidation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,10 @@ public class SubscriberService {
 
     @Transactional(readOnly = true)
     public SubscriberDto get(String id) {
-        var entity = subscriberRepository.findById(UUID.fromString(id))
-                .orElseThrow();
+
+        var uuid = UUID.fromString(id);
+
+        var entity = findEntity(uuid);
 
         return subscriberMapper.toDto(entity);
     }
@@ -34,24 +39,38 @@ public class SubscriberService {
     @Transactional(rollbackFor = Throwable.class)
     public SubscriberDto create(CreateSubscriberDto dto) {
 
-        var entity = subscriberMapper.toEntity(dto);
+        var subscriber = subscriberMapper.toEntity(dto);
 
-        subscriberRepository.save(entity);
+        new Validator()
+                .with(new SubscriberNameAlreadyExistsValidation(subscriber.getSubscriberName(), subscriberRepository))
+                .validate();
 
-        return subscriberMapper.toDto(entity);
+        subscriberRepository.save(subscriber);
+
+        return subscriberMapper.toDto(subscriber);
     }
 
     @Transactional(rollbackFor = Throwable.class)
-    public SubscriberDto create(UpdateSubscriberDto dto) {
+    public SubscriberDto update(UpdateSubscriberDto dto) {
 
-        subscriberRepository.findById(dto.getId())
+        var subscriber = subscriberRepository.findById(dto.getId())
                 .orElseThrow();
 
-        var entity = subscriberMapper.toEntity(dto);
+        if (!subscriber.getSubscriberName().equals(dto.getSubscriberName())) {
+            new Validator()
+                    .with(new SubscriberNameAlreadyExistsValidation(dto.getSubscriberName(), subscriberRepository))
+                    .validate();
+        }
 
-        subscriberRepository.save(entity);
+        subscriberMapper.update(dto, subscriber);
+        subscriberRepository.save(subscriber);
 
-        return subscriberMapper.toDto(entity);
+        return subscriberMapper.toDto(subscriber);
     }
 
+
+    public SubscriberEntity findEntity(UUID id) {
+        return subscriberRepository.findById(id)
+                .orElseThrow();
+    }
 }
