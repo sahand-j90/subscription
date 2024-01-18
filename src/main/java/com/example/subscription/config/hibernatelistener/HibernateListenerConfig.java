@@ -1,7 +1,7 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.outbox.PostInsertListener;
-import com.example.subscription.listener.outbox.PostUpdateListener;
+import com.example.subscription.listener.outbox.AbstractPostInsertListener;
+import com.example.subscription.listener.outbox.AbstractPostUpdateListener;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,8 @@ public class HibernateListenerConfig implements InitializingBean {
 
 
     private final EntityManagerFactory entityManagerFactory;
-
-    private final List<PostInsertListener<?>> postInsertListenerList;
-
-    private final List<PostUpdateListener<?>> postUpdateListeners;
+    private final List<AbstractPostInsertListener<?>> abstractPostInsertListenerList;
+    private final List<AbstractPostUpdateListener<?>> abstractPostUpdateListeners;
 
 
     @Override
@@ -37,18 +35,10 @@ public class HibernateListenerConfig implements InitializingBean {
         EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
 
         registry.getEventListenerGroup(EventType.POST_INSERT)
-                .appendListener(hibernateInsertEventListener(postInsertListenerList));
+                .appendListener(new HibernateInsertEventListener(abstractPostInsertListenerList));
 
         registry.getEventListenerGroup(EventType.POST_UPDATE)
-                .appendListener(hibernateUpdateEventListener(postUpdateListeners));
-    }
-
-    private PostInsertEventListener hibernateInsertEventListener(List<PostInsertListener<?>> postInsertListenerList) {
-        return new HibernateInsertEventListener(postInsertListenerList);
-    }
-
-    private PostUpdateEventListener hibernateUpdateEventListener(List<PostUpdateListener<?>> postUpdateListeners) {
-        return new HibernateUpdateEventListener(postUpdateListeners);
+                .appendListener(new HibernateUpdateEventListener(abstractPostUpdateListeners));
     }
 
 }

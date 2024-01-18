@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * @author Sahand Jalilvand 16.01.24
  */
-public abstract class PostInsertListener<T> {
+public abstract class AbstractPostInsertListener<T> {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public PostInsertListener(ApplicationEventPublisher eventPublisher) {
+    public AbstractPostInsertListener(ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
     }
 

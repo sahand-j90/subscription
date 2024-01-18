@@ -1,6 +1,6 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.outbox.PostUpdateListener;
+import com.example.subscription.listener.outbox.AbstractPostUpdateListener;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
@@ -14,11 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HibernateUpdateEventListener implements PostUpdateEventListener {
 
-    private final List<PostUpdateListener<?>> postUpdateListeners;
+    private final List<AbstractPostUpdateListener<?>> abstractPostUpdateListeners;
 
     @Override
     public void onPostUpdate(PostUpdateEvent event) {
-        postUpdateListeners.stream()
+        abstractPostUpdateListeners.stream()
                 .filter(i -> i.getType().isAssignableFrom(event.getEntity().getClass()))
                 .forEach(i -> i.onPostUpdate(event));
     }

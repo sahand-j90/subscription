@@ -1,6 +1,6 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.outbox.PostInsertListener;
+import com.example.subscription.listener.outbox.AbstractPostInsertListener;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;
@@ -14,11 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HibernateInsertEventListener implements PostInsertEventListener {
 
-    private final List<PostInsertListener<?>> postInsertListenerList;
+    private final List<AbstractPostInsertListener<?>> abstractPostInsertListenerList;
 
     @Override
     public void onPostInsert(PostInsertEvent event) {
-        postInsertListenerList.stream()
+        abstractPostInsertListenerList.stream()
                 .filter(i -> i.getType().isAssignableFrom(event.getEntity().getClass()))
                 .forEach(i -> i.onPostInsert(event));
     }

@@ -16,12 +16,12 @@ import java.util.function.Predicate;
 /**
  * @author Sahand Jalilvand 16.01.24
  */
-public abstract class PostUpdateListener<T> {
+public abstract class AbstractPostUpdateListener<T> {
 
     private ApplicationEventPublisher eventPublisher;
     private final Map<String, Integer> propertyIndexMap;
 
-    public PostUpdateListener(EntityManagerFactory entityManagerFactory, ApplicationEventPublisher eventPublisher) {
+    public AbstractPostUpdateListener(EntityManagerFactory entityManagerFactory, ApplicationEventPublisher eventPublisher) {
 
         this.eventPublisher = eventPublisher;
         this.propertyIndexMap = new HashMap<>();
