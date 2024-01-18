@@ -1,4 +1,4 @@
-package com.example.subscription.listener.outbox;
+package com.example.subscription.outbox.core;
 
 import com.example.subscription.domains.OutboxEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,12 +22,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CdcService {
 
-    @Value("${subscription.domain-event-channel}")
-    private String domainEventsChannel;
-
-    @Value("${subscription.dead-letter-channel}")
-    private String deadLetterChannel;
-
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
@@ -39,7 +33,7 @@ public class CdcService {
 
         var content = createContent(outboxEntity);
 
-        kafkaTemplate.send(domainEventsChannel, outboxEntity.getCorrelationId(), content)
+        kafkaTemplate.send(outboxEntity.getChannel(), outboxEntity.getCorrelationId(), content)
                 .whenComplete((result, ex) -> {
 
                     setSpanId(outboxEntity.getSpanId());
@@ -63,6 +57,7 @@ public class CdcService {
 
         var outbox = OutboxEntity.builder()
                 .idempotentKey(UUID.fromString((String) payload.get("idempotent_key")))
+                .channel((String) payload.get("channel"))
                 .correlationId((String) payload.get("correlation_id"))
                 .createdAt(new Date((long) payload.get("created_at")))
                 .eventType((String) payload.get("event_type"))
@@ -89,13 +84,12 @@ public class CdcService {
 
     private void handleFailure(OutboxEntity outboxEntity, Throwable throwable) {
 
+        // TODO: 18.01.24 Use dead letter pattern
+
         log.error("DomainEventException: correlationId[{}] outboxEntity[{}]",
                 outboxEntity.getCorrelationId(),
                 outboxEntity,
                 throwable);
-
-        // TODO: 16.01.24
-        kafkaTemplate.send(deadLetterChannel, createContent(outboxEntity));
     }
 
     private void setSpanId(String spanId) {

@@ -1,6 +1,6 @@
 package com.example.subscription.config.cdc;
 
-import com.example.subscription.listener.outbox.CdcService;
+import com.example.subscription.outbox.core.CdcService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;

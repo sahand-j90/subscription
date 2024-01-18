@@ -1,14 +1,12 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.outbox.AbstractPostInsertListener;
-import com.example.subscription.listener.outbox.AbstractPostUpdateListener;
+import com.example.subscription.outbox.core.AbstractPostInsertListener;
+import com.example.subscription.outbox.core.AbstractPostUpdateListener;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
-import org.hibernate.event.spi.PostInsertEventListener;
-import org.hibernate.event.spi.PostUpdateEventListener;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.example.subscription.listener;
+package com.example.subscription.outbox;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +16,8 @@ import org.hibernate.event.spi.EventSource;
 public class DomainEvent<T> {
 
     String correlationId;
+
+    String channel;
 
     String domain;
 

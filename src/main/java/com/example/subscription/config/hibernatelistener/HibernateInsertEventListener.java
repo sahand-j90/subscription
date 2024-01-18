@@ -1,6 +1,6 @@
 package com.example.subscription.config.hibernatelistener;
 
-import com.example.subscription.listener.outbox.AbstractPostInsertListener;
+import com.example.subscription.outbox.core.AbstractPostInsertListener;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;

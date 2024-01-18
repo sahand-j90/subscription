@@ -1,6 +1,6 @@
-package com.example.subscription.listener.outbox;
+package com.example.subscription.outbox.core;
 
-import com.example.subscription.listener.DomainEvent;
+import com.example.subscription.outbox.DomainEvent;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.internal.SessionFactoryImpl;

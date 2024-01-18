@@ -1,6 +1,8 @@
-package com.example.subscription.config.kafka;
+package com.example.subscription.outbox.core;
 
 import com.example.subscription.config.props.KafkaPropsHolder;
+import com.example.subscription.domains.ApplicationEntity;
+import com.example.subscription.services.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +11,6 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
 import org.apache.kafka.common.errors.TopicExistsException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Component;
 
@@ -23,22 +24,20 @@ import java.util.concurrent.ExecutionException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaTopics implements InitializingBean {
+public class OutboxChannelService implements InitializingBean {
 
 
     private final KafkaAdmin kafkaAdmin;
     private final KafkaPropsHolder kafkaPropsHolder;
 
-    @Value("${subscription.domain-event-channel}")
-    private String domainEventsChannel;
-
-    @Value("${subscription.dead-letter-channel}")
-    private String deadLetterChannel;
+    private final ApplicationService applicationService;
 
     @Override
     public void afterPropertiesSet() {
-        createTopic(domainEventsChannel);
-        createTopic(deadLetterChannel);
+        applicationService.getAll()
+                .stream()
+                .map(ApplicationEntity::getChannel)
+                .forEach(this::createTopic);
     }
 
     @SneakyThrows
@@ -54,8 +53,7 @@ public class KafkaTopics implements InitializingBean {
             var cause = e.getCause();
             if (cause instanceof TopicExistsException) {
                 log.info("Topic[{}] already exists", topicName);
-            }
-            else {
+            } else {
                 throw cause;
             }
         }

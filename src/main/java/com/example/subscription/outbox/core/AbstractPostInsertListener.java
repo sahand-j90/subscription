@@ -1,6 +1,6 @@
-package com.example.subscription.listener.outbox;
+package com.example.subscription.outbox.core;
 
-import com.example.subscription.listener.DomainEvent;
+import com.example.subscription.outbox.DomainEvent;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.springframework.context.ApplicationEventPublisher;
 

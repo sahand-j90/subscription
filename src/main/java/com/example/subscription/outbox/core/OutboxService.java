@@ -1,7 +1,7 @@
-package com.example.subscription.listener.outbox;
+package com.example.subscription.outbox.core;
 
 import com.example.subscription.domains.OutboxEntity;
-import com.example.subscription.listener.DomainEvent;
+import com.example.subscription.outbox.DomainEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.FlushModeType;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,7 @@ public class OutboxService {
         var outbox = OutboxEntity.builder()
                 .idempotentKey(UUID.randomUUID())
                 .createdAt(new Date())
+                .channel(domainEvent.getChannel())
                 .correlationId(domainEvent.getCorrelationId())
                 .domain(domainEvent.getDomain())
                 .eventType(domainEvent.getEventType())
@@ -52,6 +53,7 @@ public class OutboxService {
         query.setParameter("eventType", outbox.getEventType());
         query.setParameter("messageData", outbox.getMessageData());
         query.setParameter("spanId", outbox.getSpanId());
+        query.setParameter("channel", outbox.getChannel());
         query.setFlushMode(FlushModeType.COMMIT);
         query.executeUpdate();
     }
