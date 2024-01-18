@@ -23,7 +23,7 @@ public class ApplicationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "idempotent_key")
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "channel")
