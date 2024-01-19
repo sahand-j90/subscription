@@ -1,6 +1,8 @@
 package com.example.subscription.services.validators;
 
 import com.example.subscription.domains.SubscriptionEntity;
+import com.example.subscription.exceptions.BizException;
+import com.example.subscription.exceptions.Errors;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -20,11 +22,11 @@ public class SubscriptionDateValidation implements Validation {
         var to = subscription.getTo();
 
         if (from.isAfter(to)) {
-            throw new RuntimeException();
+            throw new BizException(Errors.INVALID_SUBSCRIPTION_INTERVAL);
         }
 
         if (from.isBefore(LocalDate.now())) {
-            throw new RuntimeException();
+            throw new BizException(Errors.INVALID_SUBSCRIPTION_INTERVAL);
         }
     }
 }

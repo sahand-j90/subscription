@@ -41,7 +41,7 @@ public class SubscriberEntity {
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
-    @Column(name = "SUBSCRIBER_NAME", nullable = false)
+    @Column(name = "SUBSCRIBER_NAME", nullable = false, unique = true)
     private String subscriberName;
 
     @OneToMany(mappedBy = "subscriber")

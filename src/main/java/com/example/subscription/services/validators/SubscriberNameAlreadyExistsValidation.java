@@ -1,5 +1,7 @@
 package com.example.subscription.services.validators;
 
+import com.example.subscription.exceptions.BizException;
+import com.example.subscription.exceptions.Errors;
 import com.example.subscription.repositories.SubscriberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +19,7 @@ public class SubscriberNameAlreadyExistsValidation implements Validation {
         var subscriber = subscriberRepository.findBySubscriberName(subscriberName);
 
         if (subscriber.isPresent()) {
-            throw new RuntimeException();
+            throw new BizException(Errors.SUBSCRIBER_ALREADY_EXISTS);
         }
     }
 }

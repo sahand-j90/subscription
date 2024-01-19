@@ -14,6 +14,16 @@ public class Errors {
 
     public static final ErrorBundle VALIDATION_EXCEPTION = new ErrorBundle(40001, HttpStatus.BAD_REQUEST, Messages.VALIDATION_EXCEPTION);
 
+    public static final ErrorBundle INVALID_SUBSCRIPTION_INTERVAL = new ErrorBundle(40002, HttpStatus.BAD_REQUEST, Messages.INVALID_SUBSCRIPTION_INTERVAL);
+
+    public static final ErrorBundle SUBSCRIBER_ALREADY_EXISTS = new ErrorBundle(40003, HttpStatus.BAD_REQUEST, Messages.SUBSCRIBER_ALREADY_EXISTS);
+
+    public static final ErrorBundle DELETE_NON_RESERVED_IS_NOT_POSSIBLE = new ErrorBundle(40004, HttpStatus.BAD_REQUEST, Messages.DELETE_NON_RESERVED_IS_NOT_POSSIBLE);
+
+    public static final ErrorBundle SUBSCRIPTION_OVERLAP_EXCEPTION = new ErrorBundle(40005, HttpStatus.BAD_REQUEST, Messages.SUBSCRIPTION_OVERLAP_EXCEPTION);
+
+
+
 
     // 404
 

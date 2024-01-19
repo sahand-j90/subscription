@@ -1,6 +1,8 @@
 package com.example.subscription.services.validators;
 
 import com.example.subscription.domains.SubscriptionEntity;
+import com.example.subscription.exceptions.BizException;
+import com.example.subscription.exceptions.Errors;
 import com.example.subscription.repositories.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +26,7 @@ public class SubscriptionHasOverlapValidation implements Validation {
         var overlaps = subscriptionRepository.findAllBetweenDates(userId, from, to);
 
         if (!overlaps.isEmpty()) {
-            throw new RuntimeException();
+            throw new BizException(Errors.SUBSCRIPTION_OVERLAP_EXCEPTION);
         }
     }
 }

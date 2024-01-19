@@ -3,6 +3,8 @@ package com.example.subscription.services;
 import com.example.subscription.domains.SubscriberEntity_;
 import com.example.subscription.domains.SubscriptionEntity;
 import com.example.subscription.enums.SubscriptionStateEnum;
+import com.example.subscription.exceptions.BizException;
+import com.example.subscription.exceptions.Errors;
 import com.example.subscription.repositories.SubscriptionRepository;
 import com.example.subscription.services.dto.CreateSubscriptionDto;
 import com.example.subscription.services.dto.SubscriptionDto;
@@ -116,7 +118,7 @@ public class SubscriptionService {
 
     public SubscriptionEntity findEntity(UUID id) {
         return subscriptionRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new BizException(Errors.SUBSCRIBER_NOT_FOUND));
     }
 
     private void resolveSubscriptionState(SubscriptionEntity subscription) {

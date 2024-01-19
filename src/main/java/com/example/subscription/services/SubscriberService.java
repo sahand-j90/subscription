@@ -2,6 +2,8 @@ package com.example.subscription.services;
 
 import com.example.subscription.domains.SubscriberEntity;
 import com.example.subscription.domains.SubscriberEntity_;
+import com.example.subscription.exceptions.BizException;
+import com.example.subscription.exceptions.Errors;
 import com.example.subscription.repositories.SubscriberRepository;
 import com.example.subscription.services.dto.CreateSubscriberDto;
 import com.example.subscription.services.dto.SubscriberDto;
@@ -77,8 +79,7 @@ public class SubscriberService {
     @Transactional(rollbackFor = Throwable.class)
     public SubscriberDto update(UpdateSubscriberDto dto) {
 
-        var subscriber = subscriberRepository.findById(dto.getId())
-                .orElseThrow();
+        var subscriber = findEntity(dto.getId());
 
         if (!subscriber.getSubscriberName().equals(dto.getSubscriberName())) {
             new Validator()
@@ -95,6 +96,6 @@ public class SubscriberService {
 
     public SubscriberEntity findEntity(UUID id) {
         return subscriberRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new BizException(Errors.SUBSCRIBER_NOT_FOUND));
     }
 }
