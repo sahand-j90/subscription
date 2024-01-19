@@ -4,6 +4,8 @@ import com.example.subscription.services.SubscriberService;
 import com.example.subscription.services.dto.CreateSubscriberDto;
 import com.example.subscription.services.dto.SubscriberDto;
 import com.example.subscription.services.dto.UpdateSubscriberDto;
+import com.example.subscription.services.specs.SubscriberSpecificationBuilder;
+import com.example.subscription.services.specs.core.PaginationResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,12 @@ public class SubscriberResource {
     @GetMapping("/{id}")
     public ResponseEntity<SubscriberDto> get(@PathVariable("id") String id) {
         var response = subscriberService.get(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginationResult<SubscriberDto>> search(@Valid SubscriberSpecificationBuilder.SubscriberSearch search) {
+        var response = subscriberService.search(search);
         return ResponseEntity.ok(response);
     }
 
