@@ -53,7 +53,7 @@ public class SubscriptionService {
         var pageNumber = search.getPageNumber();
         var pageSize = search.getPageSize();
 
-        var pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, SubscriberEntity_.CREATED_AT));
+        var pageRequest = PageRequest.of(pageNumber , pageSize, Sort.by(Sort.Direction.DESC, SubscriberEntity_.CREATED_AT));
         var spec = new SubscriptionSpecificationBuilder().build(search);
         var page = subscriptionRepository.findAll(spec, pageRequest);
         var items = subscriptionMapper.toDto(page.getContent());

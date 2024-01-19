@@ -17,6 +17,6 @@ public class PaginationSearch {
     int pageSize = 10;
 
     @Min(value = 0, message = "شماره صفحه از 0 شروع می شود")
-    int pageNumber = 1;
+    int pageNumber = 0;
 
 }

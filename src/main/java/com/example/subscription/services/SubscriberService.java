@@ -47,7 +47,7 @@ public class SubscriberService {
         var pageNumber = search.getPageNumber();
         var pageSize = search.getPageSize();
 
-        var pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, SubscriberEntity_.CREATED_AT));
+        var pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, SubscriberEntity_.CREATED_AT));
         var spec = new SubscriberSpecificationBuilder().build(search);
         var page = subscriberRepository.findAll(spec, pageRequest);
         var items = subscriberMapper.toDto(page.getContent());
