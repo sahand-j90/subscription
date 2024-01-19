@@ -43,6 +43,6 @@ subscription:
 
   cdc:
     connector-class: ${CDC_CONNECTOR_CLASS:io.debezium.connector.postgresql.PostgresConnector}
-    offset-file: ${CDC_OFFSET_FILE:~/cdc-offset.dat}
-    flush-interval: ${CDC_FLUSH_INTERVAL:60000}
+    offset-file: ${CDC_OFFSET_FILE:~/offset.dat}
+    flush-interval: ${CDC_FLUSH_INTERVAL:6000}
     outbox-table: ${CDC_OUTBOX_TABLE:public.TBL_OUTBOX}

@@ -14,7 +14,7 @@ public class SubscriberNameAlreadyExistsValidation implements Validation {
 
     @Override
     public void validate() {
-        var subscriber = subscriberRepository.findBySubsAndSubscriberName(subscriberName);
+        var subscriber = subscriberRepository.findBySubscriberName(subscriberName);
 
         if (subscriber.isPresent()) {
             throw new RuntimeException();

@@ -49,7 +49,7 @@ public class OutboxEntity {
     private String eventType;
 
     @JsonIgnore
-    @Column(name = "message_data", nullable = false)
+    @Column(name = "message_data", nullable = false, columnDefinition = "TEXT")
     private String messageData;
 
     @JsonIgnore
