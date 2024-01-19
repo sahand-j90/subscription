@@ -5,10 +5,17 @@ package com.example.subscription.i18n;
  */
 public class Messages {
 
-     public static final String NOT_EMPTY = "NOT_EMPTY";
-     public static final String PAGE_NUMBER_MIN_VALUE = "PAGE_NUMBER_MIN_VALUE";
-     public static final String PAGE_SIZE_MIN_VALUE = "PAGE_SIZE_MIN_VALUE";
-     public static final String PAGE_SIZE_MAX_VALUE = "PAGE_SIZE_MAX_VALUE";
-    public static final String INVALID_UUID="INVALID_UUID";
+    // Exception
+    public static final String GENERAL_BIZ_EXCEPTION = "GENERAL_BIZ_EXCEPTION";
+    public static final String GENERAL_UNKNOWN_EXCEPTION = "GENERAL_UNKNOWN_EXCEPTION";
+    public static final String VALIDATION_EXCEPTION = "VALIDATION_EXCEPTION";
+    public static final String SUBSCRIBER_NOT_FOUND = "SUBSCRIBER_NOT_FOUND";
+    public static final String SUBSCRIPTION_NOT_FOUND = "SUBSCRIPTION_NOT_FOUND";
 
+    // Validations
+    public static final String NOT_EMPTY = "NOT_EMPTY";
+    public static final String PAGE_NUMBER_MIN_VALUE = "PAGE_NUMBER_MIN_VALUE";
+    public static final String PAGE_SIZE_MIN_VALUE = "PAGE_SIZE_MIN_VALUE";
+    public static final String PAGE_SIZE_MAX_VALUE = "PAGE_SIZE_MAX_VALUE";
+    public static final String INVALID_UUID = "INVALID_UUID";
 }
