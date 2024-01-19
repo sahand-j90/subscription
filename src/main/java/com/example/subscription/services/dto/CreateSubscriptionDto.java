@@ -1,5 +1,6 @@
 package com.example.subscription.services.dto;
 
+import com.example.subscription.i18n.Messages;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -12,13 +13,13 @@ import java.util.UUID;
 @Data
 public class CreateSubscriptionDto {
 
-    @NotNull
+    @NotNull(message = Messages.NOT_EMPTY)
     private LocalDate from;
 
-    @NotNull
+    @NotNull(message = Messages.NOT_EMPTY)
     private LocalDate to;
 
-    @NotNull
+    @NotNull(message = Messages.NOT_EMPTY)
     private UUID subscriberId;
 
 }

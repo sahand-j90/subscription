@@ -1,5 +1,6 @@
 package com.example.subscription.services.specs.core;
 
+import com.example.subscription.i18n.Messages;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
@@ -12,11 +13,11 @@ import lombok.Setter;
 @Setter
 public class PaginationSearch {
 
-    @Max(value = 100, message = "حداکثر 100 ایتم در هر درخواست قابل بازیابی است")
-    @Min(value = 10, message = "حداقل سایز هر صفحه 10 است.")
+    @Max(value = 100, message = Messages.PAGE_SIZE_MAX_VALUE)
+    @Min(value = 10, message = Messages.PAGE_SIZE_MIN_VALUE)
     int pageSize = 10;
 
-    @Min(value = 0, message = "شماره صفحه از 0 شروع می شود")
+    @Min(value = 0, message = Messages.PAGE_NUMBER_MIN_VALUE)
     int pageNumber = 0;
 
 }

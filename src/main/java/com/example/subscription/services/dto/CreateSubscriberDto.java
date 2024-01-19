@@ -1,5 +1,6 @@
 package com.example.subscription.services.dto;
 
+import com.example.subscription.i18n.Messages;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
@@ -9,6 +10,6 @@ import lombok.Data;
 @Data
 public class CreateSubscriberDto {
 
-    @NotEmpty
+    @NotEmpty(message = Messages.NOT_EMPTY)
     private String subscriberName;
 }

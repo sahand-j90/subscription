@@ -1,5 +1,6 @@
 package com.example.subscription.services.dto;
 
+import com.example.subscription.i18n.Messages;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +19,10 @@ import java.util.UUID;
 @Builder
 public class UpdateSubscriptionDto {
 
-    @NotNull
+    @NotNull(message = Messages.NOT_EMPTY)
     private UUID id;
 
-    @NotNull
+    @NotNull(message = Messages.NOT_EMPTY)
     private int version;
 
     private LocalDate from;

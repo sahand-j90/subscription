@@ -3,6 +3,7 @@ package com.example.subscription.services.specs;
 import com.example.subscription.domains.SubscriberEntity_;
 import com.example.subscription.domains.SubscriptionEntity;
 import com.example.subscription.domains.SubscriptionEntity_;
+import com.example.subscription.i18n.Messages;
 import com.example.subscription.services.specs.core.EntitySpecification;
 import com.example.subscription.services.specs.core.PaginationSearch;
 import com.example.subscription.services.specs.core.SearchOperation;
@@ -53,7 +54,7 @@ public class SubscriptionSpecificationBuilder extends SpecificationsBuilder<Subs
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate to;
 
-        @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "فرمت ایدی اشتباه است")
+        @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = Messages.INVALID_UUID)
         private String subscriberId;
     }
 }
