@@ -46,3 +46,13 @@ subscription:
     offset-file: ${CDC_OFFSET_FILE:/offset/offset.dat}
     flush-interval: ${CDC_FLUSH_INTERVAL:6000}
     outbox-table: ${CDC_OUTBOX_TABLE:public.TBL_OUTBOX}
+
+  log:
+    file:
+      enabled: ${LOG_FILE_ENABLED:false}
+      path: ${LOG_PATH:./log}
+      daily-log-dir: ${DAILY_LOG_PATH:./log}
+      file-name: ${LOG_FILE_NAME:subscription-log}
+      max-history: ${LOG_MAX_HISTORY:5}
+      max-size: ${LOG_MAX_SIZE:10GB}
+      max-file-size: ${LOG_MAX_FILE_SIZE:3GB}

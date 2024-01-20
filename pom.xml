@@ -18,6 +18,7 @@
         <debezium.version>2.5.0.Final</debezium.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <logstash.version>7.4</logstash.version>
     </properties>
     <dependencies>
 
@@ -104,6 +105,22 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash.version}</version>
         </dependency>
 
         <dependency>

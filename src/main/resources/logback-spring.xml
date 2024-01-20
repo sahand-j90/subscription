@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true" scanPeriod="60 seconds">
+
+
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+    <springProperty scope="context" name="LOG_DIR" source="subscription.log.file.path" defaultValue="./log/"/>
+    <springProperty scope="context" name="DAILY_LOG_DIR" source="subscription.log.file.daily-log-dir" defaultValue="./log/"/>
+    <springProperty scope="context" name="MAX_HISTORY" source="subscription.log.file.max-history" defaultValue="5"/>
+    <springProperty scope="context" name="MAX_SIZE" source="subscription.log.file.max-size" defaultValue="10GB"/>
+    <springProperty scope="context" name="MAX_FILE_SIZE" source="subscription.log.file.max-file-size" defaultValue="3GB"/>
+    <springProperty scope="context" name="LOG_FILE" source="subscription.log.file.file-name"/>
+    <springProperty scope="context" name="LOG_FILE_ENABLED" source="subscription.log.file.enabled" defaultValue="false"/>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %boldGreen(%msg) %n%boldRed(%ex)
+            </pattern>
+        </encoder>
+    </appender>
+
+
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_DIR}/${LOG_FILE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${DAILY_LOG_DIR}/${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+            <totalSizeCap>${MAX_SIZE}</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSS,Asia/Tehran</pattern>
+                    <timeZone>Etc/UTC</timeZone>
+                </timestamp>
+                <mdc/>
+                <callerData/>
+                <logLevel/>
+                <loggerName>
+                    <shortenedLoggerNameLength>40</shortenedLoggerNameLength>
+                </loggerName>
+                <throwableClassName/>
+                <throwableRootCauseClassName/>
+                <pattern>
+                    <pattern>
+                        {
+                        "appname": "${APP_NAME}"
+                        }
+                    </pattern>
+                </pattern>
+                <threadName/>
+                <tags />
+                <message/>
+                <logstashMarkers/>
+                <stackTrace>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>20</maxDepthPerThrowable>
+                        <maxLength>2048</maxLength>
+                        <shortenedClassNameLength>40</shortenedClassNameLength>
+                        <!-- generated class names -->
+                        <exclude>\$\$FastClassByCGLIB\$\$</exclude>
+                        <exclude>\$\$EnhancerBySpringCGLIB\$\$</exclude>
+                        <exclude>^sun\.reflect\..*\.invoke</exclude>
+                        <!-- JDK internals -->
+                        <exclude>^com\.sun\.</exclude>
+                        <exclude>^sun\.net\.</exclude>
+                        <!-- dynamic invocation -->
+                        <exclude>^net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                        <exclude>^org\.springframework\.cglib\.</exclude>
+                        <exclude>^org\.springframework\.transaction\.</exclude>
+                        <exclude>^org\.springframework\.validation\.</exclude>
+                        <exclude>^org\.springframework\.app\.</exclude>
+                        <exclude>^org\.springframework\.aop\.</exclude>
+                        <exclude>^java\.lang\.reflect\.Method\.invoke</exclude>
+                        <!-- Spring plumbing -->
+                        <exclude>^org\.springframework\.ws\..*\.invoke</exclude>
+                        <exclude>^org\.springframework\.ws\.transport\.</exclude>
+                        <exclude>^org\.springframework\.ws\.soap\.saaj\.SaajSoapMessage\.</exclude>
+                        <exclude>^org\.springframework\.ws\.client\.core\.WebServiceTemplate\.</exclude>
+                        <exclude>^org\.springframework\.web\.filter\.</exclude>
+                        <!-- Tomcat internals -->
+                        <exclude>^org\.apache\.tomcat\.</exclude>
+                        <exclude>^org\.apache\.catalina\.</exclude>
+                        <exclude>^org\.apache\.coyote\.</exclude>
+                        <exclude>^java\.util\.concurrent\.ThreadPoolExecutor\.runWorker</exclude>
+                        <exclude>^java\.lang\.Thread\.run$</exclude>
+                        <rootCauseFirst>true</rootCauseFirst>
+                        <inlineHash>true</inlineHash>
+                    </throwableConverter>
+                </stackTrace>
+                <arguments/>
+                <sequence/>
+            </providers>
+        </encoder>
+
+    </appender>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+
+    <root level="${logging.level.root}">
+        <if condition='"${LOG_FILE_ENABLED}".equals("true")'>
+            <then>
+                <appender-ref ref="FILE"/>
+                <appender-ref ref="STDOUT"/>
+            </then>
+            <else>
+                <appender-ref ref="STDOUT"/>
+            </else>
+        </if>
+    </root>
+
+</configuration>
