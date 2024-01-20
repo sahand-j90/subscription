@@ -1,5 +1,6 @@
 package com.example.subscription.outbox.core;
 
+import com.example.subscription.common.TracerService;
 import com.example.subscription.domains.OutboxEntity;
 import com.example.subscription.outbox.DomainEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -25,6 +27,7 @@ import java.util.UUID;
 public class OutboxService {
 
     private final ObjectMapper objectMapper;
+    private final TracerService tracerService;
 
     @EventListener(classes = DomainEvent.class)
     @Transactional(propagation = Propagation.MANDATORY)
@@ -63,13 +66,15 @@ public class OutboxService {
         return objectMapper.writeValueAsString(t);
     }
 
-    // TODO: 16.01.24
     private String getSpanId() {
-        return "-";
+        return Optional.ofNullable(tracerService.getSpanIdAsLong())
+                .map(Object::toString)
+                .orElse(null);
     }
 
-    // TODO: 16.01.24
     private String getTraceId() {
-        return "-";
+        return Optional.ofNullable(tracerService.getTraceIdAsLong())
+                .map(Object::toString)
+                .orElse(null);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.subscription.outbox.core;
 
+import com.example.subscription.common.TracerService;
 import com.example.subscription.domains.OutboxEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ChangedDataPublisher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
+    private final TracerService tracerService;
 
     public void publish(Map<String, Object> payload) {
 
@@ -96,6 +98,13 @@ public class ChangedDataPublisher {
     }
 
     private void setTraceContext(OutboxEntity outboxEntity) {
-        // TODO: 16.01.24
+
+        if (outboxEntity.getTraceId() != null && outboxEntity.getSpanId() != null) {
+
+            var spanId = Long.parseLong(outboxEntity.getSpanId());
+            var traceId = Long.parseLong(outboxEntity.getTraceId());
+
+            tracerService.injectTrace(traceId, spanId);
+        }
     }
 }

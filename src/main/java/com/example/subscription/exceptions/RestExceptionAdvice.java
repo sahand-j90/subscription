@@ -1,5 +1,6 @@
 package com.example.subscription.exceptions;
 
+import com.example.subscription.common.TracerService;
 import com.example.subscription.exceptions.models.ErrorMessage;
 import com.example.subscription.exceptions.models.ValidationItem;
 import com.example.subscription.i18n.MessageResolver;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class RestExceptionAdvice {
 
     private final MessageResolver messageResolver;
+    private final TracerService tracerService;
 
     @ExceptionHandler(BizException.class)
     public ResponseEntity<ErrorMessage> handle(BizException ex, HttpServletRequest request) {
@@ -124,7 +126,8 @@ public class RestExceptionAdvice {
     }
 
     private String getCurrentSpanId() {
-        return null;
+        return Optional.ofNullable(tracerService.getSpanId())
+                .orElse(null);
     }
 
 }
