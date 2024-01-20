@@ -1,8 +1,10 @@
 package com.example.subscription.endpoints.rest;
 
 import com.example.subscription.services.UserService;
-import com.example.subscription.services.dto.*;
-import com.example.subscription.services.specs.SubscriptionSpecificationBuilder;
+import com.example.subscription.services.dto.ChangePasswordDto;
+import com.example.subscription.services.dto.CreateUserDto;
+import com.example.subscription.services.dto.UpdateUserDto;
+import com.example.subscription.services.dto.UserDto;
 import com.example.subscription.services.specs.UserSpecificationBuilder;
 import com.example.subscription.services.specs.core.PaginationResult;
 import jakarta.validation.Valid;
@@ -44,6 +46,12 @@ public class UserResource {
     public ResponseEntity<UserDto> update(@RequestBody @Valid UpdateUserDto dto) {
         var response = userService.update(dto);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordDto dto) {
+        userService.changePassword(dto);
+        return ResponseEntity.ok().build();
     }
 
 }

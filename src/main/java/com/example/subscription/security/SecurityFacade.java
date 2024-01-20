@@ -35,4 +35,8 @@ public class SecurityFacade {
         return passwordEncoder.encode(password);
     }
 
+    public boolean matchPassword(String rowPassword, String encodedPassword) {
+        return passwordEncoder.matches(rowPassword, encodedPassword);
+    }
+
 }

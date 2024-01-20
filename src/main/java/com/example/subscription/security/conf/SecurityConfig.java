@@ -110,6 +110,9 @@ public class SecurityConfig {
         var matcher = requestMatcherRegistry.requestMatchers("/authentication/**")
                 .permitAll();
 
+        matcher.requestMatchers("/users/change-password")
+                .hasAnyRole();
+
         matcher.requestMatchers("/users/**")
                 .hasAnyRole(UserAuthorityEnum.ADMIN.name());
 

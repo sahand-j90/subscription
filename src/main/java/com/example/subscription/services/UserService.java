@@ -6,12 +6,14 @@ import com.example.subscription.exceptions.BizException;
 import com.example.subscription.exceptions.Errors;
 import com.example.subscription.repositories.UserRepository;
 import com.example.subscription.security.SecurityFacade;
+import com.example.subscription.services.dto.ChangePasswordDto;
 import com.example.subscription.services.dto.CreateUserDto;
 import com.example.subscription.services.dto.UpdateUserDto;
 import com.example.subscription.services.dto.UserDto;
 import com.example.subscription.services.mapper.UserMapper;
 import com.example.subscription.services.specs.UserSpecificationBuilder;
 import com.example.subscription.services.specs.core.PaginationResult;
+import com.example.subscription.services.validators.ChangePasswordValidation;
 import com.example.subscription.services.validators.CreateUserValidation;
 import com.example.subscription.services.validators.Validator;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +72,7 @@ public class UserService {
                 .with(new CreateUserValidation(user.getUsername(), userRepository))
                 .validate();
 
-        encodePassword(user);
+        encodePassword(user, user.getPassword());
         userRepository.save(user);
 
         return userMapper.toDto(user);
@@ -87,13 +89,25 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    private void encodePassword(UserEntity user) {
-        var encodedPassword = securityFacade.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+    @Transactional(rollbackFor = Throwable.class)
+    public void changePassword(ChangePasswordDto dto) {
+
+        var user = findEntity(dto.getUsername());
+
+        new Validator()
+                .with(new ChangePasswordValidation(user, dto.getOldPassword(), securityFacade));
+
+        encodePassword(user, dto.getNewPassword());
+        userRepository.save(user);
     }
 
     public UserEntity findEntity(String username) {
         return userRepository.findById(username)
                 .orElseThrow(() -> new BizException(Errors.USER_NOT_FOUND));
+    }
+
+    private void encodePassword(UserEntity user, String password) {
+        var encodedPassword = securityFacade.encode(password);
+        user.setPassword(encodedPassword);
     }
 }
