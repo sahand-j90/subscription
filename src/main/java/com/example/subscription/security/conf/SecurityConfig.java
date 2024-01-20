@@ -108,7 +108,10 @@ public class SecurityConfig {
     private void requestMatcher(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry requestMatcherRegistry) {
 
         var matcher = requestMatcherRegistry
-                .requestMatchers("/v1/authentication/**", "/swagger-ui/**", "/v3/api-docs/**")
+                .requestMatchers("/v1/authentication/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/actuator/**")
                 .permitAll();
 
         matcher.requestMatchers("/v1/users/change-password")

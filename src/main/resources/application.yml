@@ -82,3 +82,27 @@ logging:
 springdoc:
   api-docs:
     enabled: false
+
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include:
+          - health
+          - env
+          - loggers
+          - prometheus
+  endpoint:
+    health:
+      enabled: true
+    env:
+      enabled: true
+    prometheus:
+      enabled: true
+    loggers:
+      enabled: true
+
