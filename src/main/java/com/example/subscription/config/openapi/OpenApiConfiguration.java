@@ -1,9 +1,12 @@
 package com.example.subscription.config.openapi;
 
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.customizers.OperationCustomizer;
@@ -82,21 +85,24 @@ public class OpenApiConfiguration {
     private OperationCustomizer tokenHeaderOperationCustomizer() {
         return ((operation, handlerMethod) -> {
 
-            List<Parameter> parameters = operation.getParameters();
-            if (parameters == null) {
-                parameters = new ArrayList<>();
-            }
-            var parameter = new Parameter();
-            var schema = new Schema<>();
-            schema.setType("string");
-            parameter.setName("X-Token");
-            parameter.setIn("header");
-            parameter.setRequired(false);
-            parameter.set$ref("");
-            parameter.setDescription("JWT");
-            parameter.setDeprecated(false);
-            parameter.setSchema(schema);
-            parameters.add(parameter);
+            Parameter acceptLanguageHeader = new Parameter()
+                    .in(ParameterIn.HEADER.toString())
+                    .required(false)
+                    .description("i18n")
+                    .schema(new StringSchema()._default("fa"))
+                    .name(HttpHeaders.ACCEPT_LANGUAGE);
+
+            operation.addParametersItem(acceptLanguageHeader);
+
+            Parameter tokenHeader = new Parameter()
+                    .in(ParameterIn.HEADER.toString())
+                    .required(true)
+                    .schema(new StringSchema())
+                    .description("JWT")
+                    .name("X-Token");
+
+            operation.addParametersItem(tokenHeader);
+
             return operation;
         });
     };
