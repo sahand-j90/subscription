@@ -81,7 +81,8 @@ public class UserService {
     @Transactional(rollbackFor = Throwable.class)
     public UserDto update(UpdateUserDto updateUser) {
 
-        var user = findEntity(updateUser.getUsername());
+        var user = findEntity(updateUser.getUsername())
+                .toBuilder().build();
 
         userMapper.update(updateUser, user);
         user = userRepository.save(user);

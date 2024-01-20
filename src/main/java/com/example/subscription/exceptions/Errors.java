@@ -24,6 +24,7 @@ public class Errors {
 
     public static final ErrorBundle USER_ALREADY_EXISTS_EXCEPTION = new ErrorBundle(40006, HttpStatus.BAD_REQUEST, Messages.USER_ALREADY_EXISTS_EXCEPTION);
 
+    public static final ErrorBundle OPTIMISTIC_LOCK_EXCEPTION = new ErrorBundle(40007, HttpStatus.BAD_REQUEST, Messages.OPTIMISTIC_LOCK_EXCEPTION);
 
 
     // 401

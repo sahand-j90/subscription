@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserEntity {
+@Builder(toBuilder = true)
+public class UserEntity implements Serializable{
 
     @Id
     @Column(name = "USERNAME")

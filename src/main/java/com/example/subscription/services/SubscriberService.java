@@ -80,7 +80,8 @@ public class SubscriberService {
     @Transactional(rollbackFor = Throwable.class)
     public SubscriberDto update(UpdateSubscriberDto dto) {
 
-        var subscriber = findEntity(dto.getId());
+        var subscriber = findEntity(dto.getId())
+                .toBuilder().build();
 
         if (!subscriber.getSubscriberName().equals(dto.getSubscriberName())) {
             new Validator()

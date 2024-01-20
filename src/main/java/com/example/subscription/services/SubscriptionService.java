@@ -91,7 +91,8 @@ public class SubscriptionService {
     @Transactional(rollbackFor = Throwable.class)
     public SubscriptionDto update(UpdateSubscriptionDto dto) {
 
-        var subscription = findEntity(dto.getId());
+        var subscription = findEntity(dto.getId())
+                .toBuilder().build();
 
         subscriptionMapper.update(dto, subscription);
 

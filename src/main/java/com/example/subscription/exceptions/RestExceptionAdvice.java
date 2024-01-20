@@ -9,6 +9,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -69,6 +70,22 @@ public class RestExceptionAdvice {
 
         return ResponseEntity.badRequest().body(error);
     }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorMessage> handle(ObjectOptimisticLockingFailureException ex, HttpServletRequest request) {
+        log.error("OptimisticLockException [{}]", request.getRequestURI(), ex);
+
+        var errorBundle = Errors.OPTIMISTIC_LOCK_EXCEPTION;
+        var error = ErrorMessage.builder()
+                .code(errorBundle.code())
+                .description(messageResolver.getMessage(errorBundle.description()))
+                .spanId(getCurrentSpanId())
+                .build();
+
+        return ResponseEntity.status(errorBundle.httpStatus())
+                .body(error);
+    }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorMessage> handle(ConstraintViolationException ex, HttpServletRequest request) {

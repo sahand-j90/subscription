@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ import java.util.UUID;
 @NamedNativeQuery(name = OutboxEntity.INSERT,
         query = "INSERT INTO tbl_outbox (idempotent_key, created_at, correlation_id, domain, event_type, message_data, span_id, trace_id)\n" +
                 "VALUES (:idempotentKey, :createdAt, :correlationId, :domain, :eventType, :messageData, :spanId, :traceId)", resultClass = Void.class)
-public class OutboxEntity {
+public class OutboxEntity implements Serializable {
 
     public static final String INSERT = "OutboxEntity_insert";
 
