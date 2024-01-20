@@ -38,6 +38,7 @@ public class OutboxService {
                 .eventType(domainEvent.getEventType())
                 .messageData(getPayload(domainEvent.getPayload()))
                 .spanId(getSpanId())
+                .traceId(getTraceId())
                 .build();
 
         insert(outbox, domainEvent.getSession());
@@ -52,6 +53,7 @@ public class OutboxService {
         query.setParameter("eventType", outbox.getEventType());
         query.setParameter("messageData", outbox.getMessageData());
         query.setParameter("spanId", outbox.getSpanId());
+        query.setParameter("traceId", outbox.getTraceId());
         query.setFlushMode(FlushModeType.COMMIT);
         query.executeUpdate();
     }
@@ -63,6 +65,11 @@ public class OutboxService {
 
     // TODO: 16.01.24
     private String getSpanId() {
+        return "-";
+    }
+
+    // TODO: 16.01.24
+    private String getTraceId() {
         return "-";
     }
 }

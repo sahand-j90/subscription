@@ -32,14 +32,14 @@ public class ChangedDataPublisher {
 
         var outboxEntity = convert(payload);
 
-        setSpanId(outboxEntity.getSpanId());
+        setTraceContext(outboxEntity);
 
         var content = createContent(outboxEntity);
 
         kafkaTemplate.send(domainEventChannel, outboxEntity.getCorrelationId(), content)
                 .whenComplete((result, ex) -> {
 
-                    setSpanId(outboxEntity.getSpanId());
+                    setTraceContext(outboxEntity);
 
                     if (ex == null) {
                         handleSuccess(outboxEntity, result);
@@ -65,6 +65,7 @@ public class ChangedDataPublisher {
                 .eventType((String) payload.get("event_type"))
                 .domain((String) payload.get("domain"))
                 .spanId((String) payload.get("span_id"))
+                .traceId((String) payload.get("trace_id"))
                 .build();
 
         outbox.setPayload(objectMapper.readTree((String) payload.get("message_data")));
@@ -94,7 +95,7 @@ public class ChangedDataPublisher {
                 throwable);
     }
 
-    private void setSpanId(String spanId) {
+    private void setTraceContext(OutboxEntity outboxEntity) {
         // TODO: 16.01.24
     }
 }

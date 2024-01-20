@@ -11,7 +11,6 @@
     <springProperty scope="context" name="MAX_SIZE" source="subscription.log.file.max-size" defaultValue="10GB"/>
     <springProperty scope="context" name="MAX_FILE_SIZE" source="subscription.log.file.max-file-size" defaultValue="3GB"/>
     <springProperty scope="context" name="LOG_FILE" source="subscription.log.file.file-name"/>
-    <springProperty scope="context" name="LOG_FILE_ENABLED" source="subscription.log.file.enabled" defaultValue="false"/>
 
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -108,15 +107,15 @@
 
 
     <root level="${logging.level.root}">
-        <if condition='"${LOG_FILE_ENABLED}".equals("true")'>
-            <then>
-                <appender-ref ref="FILE"/>
-                <appender-ref ref="STDOUT"/>
-            </then>
-            <else>
-                <appender-ref ref="STDOUT"/>
-            </else>
-        </if>
+
+        <springProfile name="console_logging_enabled" >
+            <appender-ref ref="STDOUT"/>
+        </springProfile>
+
+        <springProfile name="file_logging_enabled" >
+            <appender-ref ref="FILE"/>
+        </springProfile>
+
     </root>
 
 </configuration>

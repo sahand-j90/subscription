@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="9cc6015e-c773-4059-b9b7-fc74ea187eca" author="sahand">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tlb_subscription"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tlb_subscription">
+
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tlb_subscription"/>
+            </column>
+
+            <column name="created_at" type="timestamp(6)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="timestamp(6)"/>
+
+            <column name="optimistic_lock_version" type="integer">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="from_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="to_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="subscription_state" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="subscriber_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet author="sahand" id="a2de7959-1f08-468b-b94d-e0c467077adb">
+
+        <addForeignKeyConstraint baseTableName="pk_tlb_subscription"
+                                 baseColumnNames="subscriber_id"
+                                 constraintName="fk_subscription_of_subscriber"
+
+                                 referencedTableName="tlb_subscriber"
+                                 referencedColumnNames="id"
+
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 validate="true"/>
+
+    </changeSet>
+
+
+</databaseChangeLog>

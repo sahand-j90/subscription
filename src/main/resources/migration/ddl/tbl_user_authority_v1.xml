@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="7bc5ddcc-041a-44b5-ac47-eb1bf535081c" author="sahand">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tbl_user_authority"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tbl_user_authority">
+
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="authority" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet author="sahand" id="a2ae2e0f-23fc-422b-b723-05489e6e9c1a">
+
+        <addForeignKeyConstraint baseTableName="tbl_user_authority"
+                                 baseColumnNames="username"
+                                 constraintName="fk_authorities_of_user"
+
+                                 referencedTableName="tlb_user"
+                                 referencedColumnNames="username"
+
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 validate="true"/>
+
+    </changeSet>
+
+
+</databaseChangeLog>

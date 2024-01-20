@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="4ff1f439-fc28-42ac-abd2-25b7ad4b2651" author="sahand">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tbl_outbox"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tbl_outbox">
+
+            <column name="idempotent_key" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_outbox"/>
+            </column>
+
+            <column name="created_at" type="timestamp(6)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="correlation_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="domain" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="message_data" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="span_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="trace_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

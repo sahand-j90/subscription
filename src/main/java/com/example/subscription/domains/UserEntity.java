@@ -49,7 +49,7 @@ public class UserEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "TBL_USER_AUTHORITY",
-            joinColumns = {@JoinColumn(name = "USER_ID")},
+            joinColumns = {@JoinColumn(name = "USERNAME")},
             foreignKey = @ForeignKey(name = "FK_AUTHORITIES_OF_USER"))
     @Column(name = "AUTHORITY", nullable = false)
     @Enumerated(EnumType.STRING)

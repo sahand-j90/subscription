@@ -21,7 +21,6 @@ public class UserSpecificationBuilder extends SpecificationsBuilder<UserSpecific
     }
 
     @Data
-    @NoArgsConstructor
     @AllArgsConstructor
     public static class UserSearch extends PaginationSearch {
     }

@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="38503951-7c2d-4c44-ad6f-ee85650571e5" author="sahand">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tlb_user"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tlb_user">
+
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tlb_user"/>
+            </column>
+
+            <column name="created_at" type="timestamp(6)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="timestamp(6)"/>
+
+            <column name="optimistic_lock_version" type="integer">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

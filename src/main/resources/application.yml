@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: ${APP_NAME:SUBSCRIPTION}
+
+  profiles:
+    include: ${APP_PROFILES:file_logging_enabled, console_logging_enabled}
+
+
   datasource:
     url: jdbc:postgresql://${subscription.rdbms.server}:${subscription.rdbms.port}/${subscription.rdbms.schema}
     username: ${subscription.rdbms.username}
@@ -15,12 +20,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: ${ORM_MIGRATION:create}
+      ddl-auto: ${ORM_MIGRATION:none}
     show-sql: ${DB_LOG:true}
     properties:
       hibernate.format_sql: ${FORMAT_DB_LOG:true}
 
     open-in-view: false
+
+  liquibase:
+    change-log: classpath:migration/master.xml
+    enabled: ${LIQUIBASE_ENABLE:true}
 
 subscription:
 
@@ -56,10 +65,13 @@ subscription:
 
   log:
     file:
-      enabled: ${LOG_FILE_ENABLED:false}
       path: ${LOG_PATH:./log}
       daily-log-dir: ${DAILY_LOG_PATH:./log}
       file-name: ${LOG_FILE_NAME:subscription-log}
       max-history: ${LOG_MAX_HISTORY:5}
       max-size: ${LOG_MAX_SIZE:10GB}
       max-file-size: ${LOG_MAX_FILE_SIZE:3GB}
+
+logging:
+  level:
+    root: info
