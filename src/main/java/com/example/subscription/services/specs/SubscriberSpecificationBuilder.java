@@ -34,7 +34,6 @@ public class SubscriberSpecificationBuilder extends SpecificationsBuilder<Subscr
     @AllArgsConstructor
     public static class SubscriberSearch extends PaginationSearch {
 
-        @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "فرمت ایدی اشتباه است")
         private String subscriberName;
     }
 
