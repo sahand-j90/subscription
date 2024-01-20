@@ -62,4 +62,8 @@ services:
       DB_SERVER: postgres
       DYNAMIC_CONFIG_ENABLED: 'true'
 
+    depends_on:
+      - postgres
+      - kafka1
+
 
