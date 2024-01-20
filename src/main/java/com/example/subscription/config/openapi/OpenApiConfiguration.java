@@ -11,6 +11,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
 
 import java.util.ArrayList;
@@ -81,18 +82,18 @@ public class OpenApiConfiguration {
     private OperationCustomizer tokenHeaderOperationCustomizer() {
         return ((operation, handlerMethod) -> {
 
-            var parameters = operation.getParameters();
+            List<Parameter> parameters = operation.getParameters();
             if (parameters == null) {
                 parameters = new ArrayList<>();
             }
-
             var parameter = new Parameter();
             var schema = new Schema<>();
             schema.setType("string");
-            parameter.setName("Authorization");
+            parameter.setName("X-Token");
             parameter.setIn("header");
             parameter.setRequired(false);
-            parameter.setDescription("JWT Token");
+            parameter.set$ref("");
+            parameter.setDescription("JWT");
             parameter.setDeprecated(false);
             parameter.setSchema(schema);
             parameters.add(parameter);

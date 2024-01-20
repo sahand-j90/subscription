@@ -30,10 +30,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String jwt = request.getHeader("X-Token");
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String jwt = authorizationHeader.substring(7);
+        if (jwt != null ) {
             setUserAuthentication(jwt, request, response);
         }
 
