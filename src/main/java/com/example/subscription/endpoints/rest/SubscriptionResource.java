@@ -8,6 +8,7 @@ import com.example.subscription.services.dto.UpdateSubscriptionDto;
 import com.example.subscription.services.specs.SubscriberSpecificationBuilder;
 import com.example.subscription.services.specs.SubscriptionSpecificationBuilder;
 import com.example.subscription.services.specs.core.PaginationResult;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/subscriptions")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name = "Authorization")
 public class SubscriptionResource {
 
     private final SubscriptionService subscriptionService;
