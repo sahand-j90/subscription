@@ -2,6 +2,7 @@ package com.example.subscription.services.dto;
 
 import com.example.subscription.enums.UserAuthorityEnum;
 import com.example.subscription.i18n.Messages;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
