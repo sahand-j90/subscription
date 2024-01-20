@@ -14,7 +14,7 @@ import lombok.Setter;
 public class PaginationSearch {
 
     @Min(value = 10, message = Messages.PAGE_SIZE_MIN_VALUE)
-    @Max(value = 100, message = Messages.PAGE_SIZE_MAX_VALUE)
+    @Max(value = 20, message = Messages.PAGE_SIZE_MAX_VALUE)
     int pageSize = 10;
 
     @Min(value = 0, message = Messages.PAGE_NUMBER_MIN_VALUE)
