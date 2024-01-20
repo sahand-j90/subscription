@@ -21,6 +21,7 @@
         <logstash.version>7.4</logstash.version>
         <jjwt.version>0.12.3</jjwt.version>
         <spring-doc.version>2.3.0</spring-doc.version>
+        <redisson-starter.version>3.26.0</redisson-starter.version>
     </properties>
     <dependencies>
 
@@ -109,6 +110,12 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redisson-starter.version}</version>
         </dependency>
 
         <dependency>

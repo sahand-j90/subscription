@@ -31,6 +31,12 @@ spring:
     change-log: classpath:migration/master.xml
     enabled: ${LIQUIBASE_ENABLE:true}
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+
 subscription:
 
   domain-event-channel: ${DOMAIN_EVENT_CHANNEL:DOMAIN_EVENTS}
