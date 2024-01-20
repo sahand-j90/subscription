@@ -107,7 +107,7 @@ public class SecurityConfig {
 
     private void requestMatcher(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry requestMatcherRegistry) {
 
-        var matcher = requestMatcherRegistry.requestMatchers("/login/**")
+        var matcher = requestMatcherRegistry.requestMatchers("/authentication/**")
                 .permitAll();
 
         matcher.requestMatchers("/users/**")
