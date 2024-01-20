@@ -34,4 +34,8 @@ public class DistributedLock {
     public void lock(String name) {
         redissonClient.getLock(name).lock();
     }
+
+    public boolean unlock(String name) {
+        return redissonClient.getLock(name).forceUnlock();
+    }
 }
