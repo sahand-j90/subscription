@@ -5,7 +5,7 @@ spring:
     name: ${APP_NAME:SUBSCRIPTION}
 
   profiles:
-    include: ${APP_PROFILES:file_logging_enabled, console_logging_enabled}
+    include: ${APP_PROFILES:FileLogging, ConsoleLogging}
 
 
   datasource:
@@ -62,15 +62,6 @@ subscription:
     offset-file: ${CDC_OFFSET_FILE:/offset/offset.dat}
     flush-interval: ${CDC_FLUSH_INTERVAL:6000}
     outbox-table: ${CDC_OUTBOX_TABLE:public.TBL_OUTBOX}
-
-  log:
-    file:
-      path: ${LOG_PATH:./log}
-      daily-log-dir: ${DAILY_LOG_PATH:./log}
-      file-name: ${LOG_FILE_NAME:subscription-log}
-      max-history: ${LOG_MAX_HISTORY:5}
-      max-size: ${LOG_MAX_SIZE:10GB}
-      max-file-size: ${LOG_MAX_FILE_SIZE:3GB}
 
 logging:
   level:

@@ -1,0 +1,9 @@
+subscription:
+  log:
+    file:
+      path: ${LOG_PATH:./log}
+      daily-log-dir: ${DAILY_LOG_PATH:./log}
+      file-name: ${LOG_FILE_NAME:subscription-log}
+      max-history: ${LOG_MAX_HISTORY:5}
+      max-size: ${LOG_MAX_SIZE:10GB}
+      max-file-size: ${LOG_MAX_FILE_SIZE:3GB}
