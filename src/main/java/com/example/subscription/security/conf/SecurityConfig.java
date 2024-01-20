@@ -114,7 +114,7 @@ public class SecurityConfig {
         matcher.requestMatchers("/users/**")
                 .hasAnyRole(UserAuthorityEnum.ADMIN.name());
 
-        matcher.anyRequest().permitAll();
+        matcher.anyRequest().authenticated();
     }
 
 }

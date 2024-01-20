@@ -31,12 +31,12 @@ public class GeneralAuthenticationEntryPoint implements AuthenticationEntryPoint
 
 
     private void initHeaders(HttpServletResponse response) {
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType("application/json;charset=UTF-8");
     }
 
     private void fillBody(HttpServletResponse response) throws IOException {
-        var errorBundle = Errors.INVALID_CREDENTIALS_EXCEPTION;
+        var errorBundle = Errors.ACCESS_DENIED_EXCEPTION;
         var error = ErrorMessage.builder()
                 .code(errorBundle.code())
                 .description(messageResolver.getMessage(errorBundle.description()))
