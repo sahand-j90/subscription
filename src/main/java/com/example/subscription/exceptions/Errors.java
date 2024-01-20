@@ -43,6 +43,9 @@ public class Errors {
 
     public static final ErrorBundle USER_NOT_FOUND = new ErrorBundle(40403, HttpStatus.NOT_FOUND, Messages.USER_NOT_FOUND);
 
+    // 429
+    public static final ErrorBundle TOO_MANY_REQUEST_EXCEPTION = new ErrorBundle(42900, HttpStatus.TOO_MANY_REQUESTS, Messages.TOO_MANY_REQUEST_EXCEPTION);
+
 
     // 500
 
