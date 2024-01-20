@@ -2,10 +2,7 @@ package com.example.subscription.config.openapi;
 
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.method.HandlerMethod;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Sahand Jalilvand 20.01.24
@@ -105,6 +98,8 @@ public class OpenApiConfiguration {
 
             return operation;
         });
-    };
+    }
+
+    ;
 
 }
