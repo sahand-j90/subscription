@@ -20,7 +20,7 @@ public class CreateUserDto {
     private String password;
 
     @NotNull(message = Messages.NOT_EMPTY)
-    Boolean enabled;
+    private Boolean enabled;
 
     private List<UserAuthorityEnum> authorities;
 }

@@ -26,9 +26,11 @@ public class SecurityFacade {
     public String credentialsLogin(String username, String password) {
 
         var authentication = new CredentialsAuthenticationToken(username, password);
-        authenticationManager.authenticate(authentication);
 
-        return jwtTokenService.generateToken(AuthenticationFlowEnum.CREDENTIALS, username, new HashMap<>());
+        var authenticated = authenticationManager.authenticate(authentication);
+        var authorities = authenticated.getAuthorities();
+
+        return jwtTokenService.generateToken(AuthenticationFlowEnum.CREDENTIALS, username, authorities);
     }
 
     public String encode(String password) {

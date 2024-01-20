@@ -26,6 +26,7 @@ public class CredentialsAuthorizationCommand extends AuthorizationCommandTemplat
 
     @Override
     protected AbstractAuthenticationToken provideAuthentication(Claims claims) {
+        // TODO: 20.01.24 load from JWT 
         var details = credentialsUserDetailsService.loadUserByUsername(claims.getSubject());
         return new CredentialsAuthenticationToken(details.getUsername(), null, details.getAuthorities());
     }
