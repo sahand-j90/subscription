@@ -48,7 +48,7 @@
 
     <changeSet author="sahand" id="a2de7959-1f08-468b-b94d-e0c467077adb">
 
-        <addForeignKeyConstraint baseTableName="pk_tlb_subscription"
+        <addForeignKeyConstraint baseTableName="tlb_subscription"
                                  baseColumnNames="subscriber_id"
                                  constraintName="fk_subscription_of_subscriber"
 

@@ -13,7 +13,7 @@
 
         <createTable tableName="tbl_user_authority">
 
-            <column name="user_id" type="varchar(255)">
+            <column name="username" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
 
