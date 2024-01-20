@@ -52,3 +52,14 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
       DYNAMIC_CONFIG_ENABLED: 'true'
 
+  susbcription:
+    image: sahand1990j/subscription
+    container_name: susbcription
+    ports:
+      - 9090:8081
+    environment:
+      KAFKA_HOSTS: kafka1:9092
+      DB_SERVER: postgres
+      DYNAMIC_CONFIG_ENABLED: 'true'
+
+
