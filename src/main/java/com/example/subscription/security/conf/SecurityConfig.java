@@ -108,10 +108,10 @@ public class SecurityConfig {
     private void requestMatcher(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry requestMatcherRegistry) {
 
         var matcher = requestMatcherRegistry
-                .requestMatchers("/authentication/**", "/swagger-ui/**")
+                .requestMatchers("/v1/authentication/**", "/swagger-ui/**", "/v3/api-docs/**")
                 .permitAll();
 
-        matcher.requestMatchers("/users/**")
+        matcher.requestMatchers("/v1/users/**")
                 .hasAnyRole(UserAuthorityEnum.ADMIN.name());
 
         matcher.anyRequest().authenticated();
