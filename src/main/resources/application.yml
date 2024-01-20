@@ -1,12 +1,17 @@
 server:
   port: ${APP_PORT:8081}
+
 spring:
+
   application:
     name: ${APP_NAME:SUBSCRIPTION}
 
   profiles:
     include: ${APP_PROFILES:FileLogging, ConsoleLogging, Documentation}
 
+  threads:
+    virtual:
+      enabled: true
 
   datasource:
     url: jdbc:postgresql://${subscription.rdbms.server}:${subscription.rdbms.port}/${subscription.rdbms.schema}
@@ -17,7 +22,6 @@ spring:
       minimum-idle: ${DB_MIN_IDLE:1}
       maximum-pool-size: ${DB_POOL:6}
       leak-detection-threshold: {LEAK_DETECTION_THR:30000}
-
   jpa:
     hibernate:
       ddl-auto: ${ORM_MIGRATION:none}
