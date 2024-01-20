@@ -95,7 +95,8 @@ public class UserService {
         var user = findEntity(dto.getUsername());
 
         new Validator()
-                .with(new ChangePasswordValidation(user, dto.getOldPassword(), securityFacade));
+                .with(new ChangePasswordValidation(user, dto.getOldPassword(), securityFacade))
+                .validate();
 
         encodePassword(user, dto.getNewPassword());
         userRepository.save(user);
