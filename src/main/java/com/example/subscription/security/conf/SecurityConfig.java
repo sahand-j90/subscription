@@ -107,13 +107,13 @@ public class SecurityConfig {
 
     private void requestMatcher(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry requestMatcherRegistry) {
 
-        var matcher = requestMatcherRegistry.requestMatchers("/authentication/**")
-                .permitAll();
+//        var matcher = requestMatcherRegistry.requestMatchers("/authentication/**")
+//                .permitAll();
+//
+//        matcher.requestMatchers("/users/**")
+//                .hasAnyRole(UserAuthorityEnum.ADMIN.name());
 
-        matcher.requestMatchers("/users/**")
-                .hasAnyRole(UserAuthorityEnum.ADMIN.name());
-
-        matcher.anyRequest().authenticated();
+        requestMatcherRegistry.requestMatchers("/**").permitAll();
     }
 
 }

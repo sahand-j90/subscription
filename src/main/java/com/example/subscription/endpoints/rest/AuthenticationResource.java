@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sahand Jalilvand 20.01.24
  */
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/v1/authentication")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationResource {

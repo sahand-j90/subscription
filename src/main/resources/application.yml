@@ -5,7 +5,7 @@ spring:
     name: ${APP_NAME:SUBSCRIPTION}
 
   profiles:
-    include: ${APP_PROFILES:FileLogging, ConsoleLogging}
+    include: ${APP_PROFILES:FileLogging, ConsoleLogging, Documentation}
 
 
   datasource:
@@ -66,3 +66,7 @@ subscription:
 logging:
   level:
     root: info
+
+springdoc:
+  api-docs:
+    enabled: false

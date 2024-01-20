@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Sahand Jalilvand 20.01.24
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 @Slf4j
 public class UserResource {

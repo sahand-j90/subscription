@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Sahand Jalilvand 18.01.24
  */
 @RestController
-@RequestMapping("/subscribers")
+@RequestMapping("/v1/subscribers")
 @RequiredArgsConstructor
 @Slf4j
 public class SubscriberResource {
