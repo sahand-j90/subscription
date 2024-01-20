@@ -23,6 +23,12 @@ public class Errors {
     public static final ErrorBundle SUBSCRIPTION_OVERLAP_EXCEPTION = new ErrorBundle(40005, HttpStatus.BAD_REQUEST, Messages.SUBSCRIPTION_OVERLAP_EXCEPTION);
 
 
+    // 401
+    public static final ErrorBundle INVALID_CREDENTIALS_EXCEPTION = new ErrorBundle(40100, HttpStatus.UNAUTHORIZED, Messages.INVALID_CREDENTIALS_EXCEPTION);
+    public static final ErrorBundle USER_IS_NOT_ACTIVE_EXCEPTION = new ErrorBundle(40101, HttpStatus.UNAUTHORIZED, Messages.USER_IS_NOT_ACTIVE_EXCEPTION);
+
+    // 403
+    public static final ErrorBundle ACCESS_DENIED_EXCEPTION = new ErrorBundle(40300, HttpStatus.FORBIDDEN, Messages.ACCESS_DENIED_EXCEPTION);
 
 
     // 404

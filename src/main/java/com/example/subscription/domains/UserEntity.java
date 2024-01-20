@@ -49,6 +49,9 @@ public class UserEntity {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
+    @Column(name = "IS_ENABLED", nullable = false)
+    boolean enabled;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "TBL_USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "USER_ID")},

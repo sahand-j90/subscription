@@ -15,6 +15,9 @@ public class Messages {
     public static final String SUBSCRIBER_ALREADY_EXISTS = "SUBSCRIBER_ALREADY_EXISTS";
     public static final String DELETE_NON_RESERVED_IS_NOT_POSSIBLE = "DELETE_NON_RESERVED_IS_NOT_POSSIBLE";
     public static final String SUBSCRIPTION_OVERLAP_EXCEPTION = "SUBSCRIPTION_OVERLAP_EXCEPTION";
+    public static final String INVALID_CREDENTIALS_EXCEPTION= "INVALID_CREDENTIALS_EXCEPTION";
+    public static final String USER_IS_NOT_ACTIVE_EXCEPTION = "USER_IS_NOT_ACTIVE_EXCEPTION";
+    public static final String ACCESS_DENIED_EXCEPTION = "ACCESS_DENIED_EXCEPTION";
 
     // Validations
     public static final String NOT_EMPTY = "NOT_EMPTY";

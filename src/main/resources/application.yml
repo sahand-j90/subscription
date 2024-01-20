@@ -41,6 +41,13 @@ subscription:
     fail-fast: ${KAFKA_FAIL_FAST:true}
     retention: ${KAFKA_RETENTION:1}
 
+
+  security:
+    jwt:
+      secret-key: ${SECRET_KEY:sbnkF8TnP9hstUjTDMDMP2DnlxBZF0LMapajPSOoLqDPw6LHnf9nQvXlamuaTOskPJ5Xu65zfhQ/ngu/be3p9Q==}
+      expiration: ${EXPIRATION:3600000}
+
+
   cdc:
     connector-class: ${CDC_CONNECTOR_CLASS:io.debezium.connector.postgresql.PostgresConnector}
     offset-file: ${CDC_OFFSET_FILE:/offset/offset.dat}
