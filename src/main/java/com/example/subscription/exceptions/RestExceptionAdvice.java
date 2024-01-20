@@ -59,7 +59,7 @@ public class RestExceptionAdvice {
                 .map(mapper)
                 .collect(Collectors.toList());
 
-        var errorBundle = Errors.GENERAL_UNKNOWN_EXCEPTION;
+        var errorBundle = Errors.VALIDATION_EXCEPTION;
         var error = ErrorMessage.builder()
                 .code(errorBundle.code())
                 .description(messageResolver.getMessage(errorBundle.description()))

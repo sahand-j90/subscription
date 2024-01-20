@@ -73,7 +73,7 @@ public class UserService {
                 .validate();
 
         encodePassword(user, user.getPassword());
-        userRepository.save(user);
+        user = userRepository.save(user);
 
         return userMapper.toDto(user);
     }
@@ -84,7 +84,7 @@ public class UserService {
         var user = findEntity(updateUser.getUsername());
 
         userMapper.update(updateUser, user);
-        userRepository.save(user);
+        user = userRepository.save(user);
 
         return userMapper.toDto(user);
     }

@@ -83,7 +83,7 @@ public class SubscriptionService {
 
         resolveSubscriptionState(subscription);
 
-        subscriptionRepository.save(subscription);
+        subscription = subscriptionRepository.save(subscription);
 
         return subscriptionMapper.toDto(subscription);
     }
@@ -100,7 +100,7 @@ public class SubscriptionService {
                 .with(new SubscriptionHasOverlapValidation(subscription, subscriptionRepository))
                 .validate();
 
-        subscriptionRepository.save(subscription);
+        subscription = subscriptionRepository.save(subscription);
 
         return subscriptionMapper.toDto(subscription);
     }

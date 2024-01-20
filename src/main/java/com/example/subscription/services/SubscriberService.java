@@ -72,7 +72,7 @@ public class SubscriberService {
                 .with(new SubscriberNameAlreadyExistsValidation(subscriber.getSubscriberName(), subscriberRepository))
                 .validate();
 
-        subscriberRepository.save(subscriber);
+        subscriber = subscriberRepository.save(subscriber);
 
         return subscriberMapper.toDto(subscriber);
     }
@@ -89,7 +89,7 @@ public class SubscriberService {
         }
 
         subscriberMapper.update(dto, subscriber);
-        subscriberRepository.save(subscriber);
+        subscriber = subscriberRepository.save(subscriber);
 
         return subscriberMapper.toDto(subscriber);
     }

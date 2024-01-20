@@ -111,6 +111,9 @@ public class SecurityConfig {
                 .requestMatchers("/v1/authentication/**", "/swagger-ui/**", "/v3/api-docs/**")
                 .permitAll();
 
+        matcher.requestMatchers("/v1/users/change-password")
+                .hasAnyRole(UserAuthorityEnum.ADMIN.name(), UserAuthorityEnum.NORMAL.name());
+
         matcher.requestMatchers("/v1/users/**")
                 .hasAnyRole(UserAuthorityEnum.ADMIN.name());
 

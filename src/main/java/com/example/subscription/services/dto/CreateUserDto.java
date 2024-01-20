@@ -2,6 +2,7 @@ package com.example.subscription.services.dto;
 
 import com.example.subscription.enums.UserAuthorityEnum;
 import com.example.subscription.i18n.Messages;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -22,5 +23,6 @@ public class CreateUserDto {
     @NotNull(message = Messages.NOT_EMPTY)
     private Boolean enabled;
 
+    @NotEmpty(message = Messages.NOT_EMPTY)
     private List<UserAuthorityEnum> authorities;
 }
