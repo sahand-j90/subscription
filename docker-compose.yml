@@ -12,14 +12,14 @@ services:
     ports:
       - "5432:5432"
       
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=sahandjalilvand@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=test1
-    ports:
-      - "8080:80"
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: pgadmin
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=sahandjalilvand@gmail.com
+#      - PGADMIN_DEFAULT_PASSWORD=test1
+#    ports:
+#      - "8084:80"
 
   kafka1:
     image: confluentinc/cp-kafka
@@ -32,7 +32,7 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT'
       KAFKA_LISTENERS: 'INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://kafka1:29092,EXTERNAL://localhost:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://kafka1:29092,EXTERNAL://kafka1:9092'
       KAFKA_INTER_BROKER_LISTENER_NAME: 'INTERNAL'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka1:29093'
       KAFKA_PROCESS_ROLES: 'broker,controller'
@@ -41,3 +41,14 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       CLUSTER_ID: 'ciWo7IWazngRchmPES6q5A=='
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka1-ui
+    ports:
+      - 8085:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
+      DYNAMIC_CONFIG_ENABLED: 'true'
+
