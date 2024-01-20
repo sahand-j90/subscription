@@ -12,7 +12,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Sahand Jalilvand 18.01.24
@@ -27,9 +26,8 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID")
-    private UUID id;
+    @Column(name = "USERNAME")
+    private String username;
 
     @Column(name = "OPTIMISTIC_LOCK_VERSION", nullable = false)
     @Version
@@ -43,14 +41,11 @@ public class UserEntity {
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
-    @Column(name = "USERNAME", nullable = false, unique = true)
-    private String username;
-
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
     @Column(name = "IS_ENABLED", nullable = false)
-    boolean enabled;
+    Boolean enabled;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "TBL_USER_AUTHORITY",

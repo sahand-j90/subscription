@@ -22,6 +22,9 @@ public class Errors {
 
     public static final ErrorBundle SUBSCRIPTION_OVERLAP_EXCEPTION = new ErrorBundle(40005, HttpStatus.BAD_REQUEST, Messages.SUBSCRIPTION_OVERLAP_EXCEPTION);
 
+    public static final ErrorBundle USER_ALREADY_EXISTS_EXCEPTION = new ErrorBundle(40006, HttpStatus.BAD_REQUEST, Messages.USER_ALREADY_EXISTS_EXCEPTION);
+
+
 
     // 401
     public static final ErrorBundle INVALID_CREDENTIALS_EXCEPTION = new ErrorBundle(40100, HttpStatus.UNAUTHORIZED, Messages.INVALID_CREDENTIALS_EXCEPTION);
@@ -36,6 +39,9 @@ public class Errors {
     public static final ErrorBundle SUBSCRIBER_NOT_FOUND = new ErrorBundle(40401, HttpStatus.NOT_FOUND, Messages.SUBSCRIBER_NOT_FOUND);
 
     public static final ErrorBundle SUBSCRIPTION_NOT_FOUND = new ErrorBundle(40402, HttpStatus.NOT_FOUND, Messages.SUBSCRIPTION_NOT_FOUND);
+
+    public static final ErrorBundle USER_NOT_FOUND = new ErrorBundle(40403, HttpStatus.NOT_FOUND, Messages.USER_NOT_FOUND);
+
 
     // 500
 

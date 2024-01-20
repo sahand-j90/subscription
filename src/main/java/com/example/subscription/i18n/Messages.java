@@ -18,6 +18,8 @@ public class Messages {
     public static final String INVALID_CREDENTIALS_EXCEPTION= "INVALID_CREDENTIALS_EXCEPTION";
     public static final String USER_IS_NOT_ACTIVE_EXCEPTION = "USER_IS_NOT_ACTIVE_EXCEPTION";
     public static final String ACCESS_DENIED_EXCEPTION = "ACCESS_DENIED_EXCEPTION";
+    public static final String USER_ALREADY_EXISTS_EXCEPTION = "USER_ALREADY_EXISTS_EXCEPTION";
+    public static final String USER_NOT_FOUND = "USER_NOT_FOUND";
 
     // Validations
     public static final String NOT_EMPTY = "NOT_EMPTY";

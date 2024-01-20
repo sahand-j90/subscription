@@ -57,6 +57,7 @@ public class SubscriptionService {
 
         var pageRequest = PageRequest.of(pageNumber , pageSize, Sort.by(Sort.Direction.DESC, SubscriberEntity_.CREATED_AT));
         var spec = new SubscriptionSpecificationBuilder().build(search);
+
         var page = subscriptionRepository.findAll(spec, pageRequest);
         var items = subscriptionMapper.toDto(page.getContent());
 

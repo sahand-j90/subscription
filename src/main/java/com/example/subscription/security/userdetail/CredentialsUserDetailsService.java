@@ -21,14 +21,14 @@ public class CredentialsUserDetailsService implements UserDetailsService {
     @Override
     public CredentialsUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var user = userRepository.findByUsername(username)
+        var user = userRepository.findById(username)
                 .orElseThrow(() -> new BizException(Errors.INVALID_CREDENTIALS_EXCEPTION));
 
         return CredentialsUserDetails.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .authorities(UserAuthorityEnum.convertToGrantedAuthority(user.getAuthorities()))
-                .enabled(user.isEnabled())
+                .enabled(user.getEnabled())
                 .build();
     }
 }

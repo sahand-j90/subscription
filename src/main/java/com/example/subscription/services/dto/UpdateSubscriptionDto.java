@@ -23,7 +23,7 @@ public class UpdateSubscriptionDto {
     private UUID id;
 
     @NotNull(message = Messages.NOT_EMPTY)
-    private int version;
+    private Integer version;
 
     private LocalDate from;
 
