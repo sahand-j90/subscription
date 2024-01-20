@@ -1,5 +1,6 @@
 package com.example.subscription.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +46,7 @@ public class SubscriberEntity implements Serializable {
     @Column(name = "SUBSCRIBER_NAME", nullable = false, unique = true)
     private String subscriberName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "subscriber")
     private List<SubscriptionEntity> subscriptions;
 }
