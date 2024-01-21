@@ -50,7 +50,7 @@ MapStruct is used for DTO mapping.
 # Scenario
 This is a simple subscription scenario for defining and managing user subscriptions
 ## Subscriber and Subscription
-There is tow main Domain Entity: Subscriber and Subscription. A subscriber can have multiple subscriptions.
+There is tow main Domain Entities: Subscriber and Subscription. A subscriber can have multiple subscriptions.
 Each subscription has a start date (from) and an end date (to)
 
 ### Each subscription has one of the following states:
