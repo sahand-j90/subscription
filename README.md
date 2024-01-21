@@ -75,4 +75,4 @@ There is also a user entity. A user can have **ADMIN** or **NORMAL** role. Only 
   - username: Admin
   - password: Admin
 * kafka-ui: [http//localhost:8085 ]()
-* postgres-ui: [http//localhost:8085]() (uncomment in docker-compose)
+* postgres-ui: [http//localhost:8084]() (uncomment in docker-compose)
