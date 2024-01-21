@@ -27,7 +27,7 @@ public class SecurityFacade {
 
     public String credentialsLogin(String username, String password) {
 
-        if (!distributedLock.rateLimit(username, 3, 1, RateIntervalUnit.MINUTES)) {
+        if (!distributedLock.rateLimit(username, 5, 1, RateIntervalUnit.MINUTES)) {
             throw new BizException(Errors.TOO_MANY_REQUEST_EXCEPTION);
         }
 
