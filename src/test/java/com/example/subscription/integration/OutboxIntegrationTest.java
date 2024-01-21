@@ -1,9 +1,9 @@
 package com.example.subscription.integration;
 
 import com.example.subscription.common.TransactionalService;
-import com.example.subscription.config.TestKafkaConfig;
 import com.example.subscription.enums.SubscriptionStateEnum;
 import com.example.subscription.repositories.OutboxRepository;
+import com.example.subscription.utils.KafkaTestUtils;
 import com.example.subscription.utils.OutboxTestUtils;
 import com.example.subscription.utils.SubscriptionTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,8 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.time.Duration;
@@ -25,8 +23,6 @@ import java.util.UUID;
 /**
  * @author Sahand Jalilvand 21.01.24
  */
-@SpringBootTest
-@Import(TestKafkaConfig.class)
 public class OutboxIntegrationTest extends AbstractIntegrationTest {
 
 
@@ -65,6 +61,8 @@ public class OutboxIntegrationTest extends AbstractIntegrationTest {
         var payload = objectMapper.writeValueAsString(subscription);
         var outbox = OutboxTestUtils.newOutbox(correlationId, payload);
 
+        var offset = KafkaTestUtils.lastOffset(kafkaTemplate, domainEventChannel, 0);
+
         // WHEN
         transactionalService.doInTransaction(() -> outboxRepository.save(outbox));
 
@@ -72,7 +70,7 @@ public class OutboxIntegrationTest extends AbstractIntegrationTest {
         Awaitility.await("wait_for_getting_domain_event")
                 .atMost(Duration.ofSeconds(10))
                 .untilAsserted(() -> {
-                    var message = kafkaTemplate.receive(domainEventChannel, 0, 0, Duration.ofSeconds(5));
+                    var message = kafkaTemplate.receive(domainEventChannel, 0, offset, Duration.ofSeconds(5));
 
                     Assertions.assertThat(message).isNotNull();
                     var jsonNode = objectMapper.readTree(message.value());

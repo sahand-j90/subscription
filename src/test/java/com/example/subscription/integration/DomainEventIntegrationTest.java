@@ -1,7 +1,6 @@
 package com.example.subscription.integration;
 
 import com.example.subscription.common.TransactionalService;
-import com.example.subscription.config.TestKafkaConfig;
 import com.example.subscription.domains.SubscriberEntity;
 import com.example.subscription.enums.SubscriptionEventTypeEnum;
 import com.example.subscription.repositories.OutboxRepository;
@@ -9,6 +8,7 @@ import com.example.subscription.repositories.SubscriberRepository;
 import com.example.subscription.repositories.SubscriptionRepository;
 import com.example.subscription.services.SubscriptionService;
 import com.example.subscription.services.dto.CreateSubscriptionDto;
+import com.example.subscription.utils.KafkaTestUtils;
 import com.example.subscription.utils.SubscriberTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
@@ -18,8 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.time.Duration;
@@ -28,8 +26,6 @@ import java.time.LocalDate;
 /**
  * @author Sahand Jalilvand 21.01.24
  */
-@SpringBootTest
-@Import(TestKafkaConfig.class)
 public class DomainEventIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -89,6 +85,8 @@ public class DomainEventIntegrationTest extends AbstractIntegrationTest {
         createSubscription.setFrom(LocalDate.now());
         createSubscription.setTo(LocalDate.now().plusDays(1));
 
+        var offset = KafkaTestUtils.lastOffset(kafkaTemplate, domainEventChannel, 0);
+
         // WHEN
         var subscription = subscriptionService.create(createSubscription);
 
@@ -96,7 +94,7 @@ public class DomainEventIntegrationTest extends AbstractIntegrationTest {
         Awaitility.await("wait_for_getting_domain_event")
                 .atMost(Duration.ofSeconds(10))
                 .untilAsserted(() -> {
-                    var creationMessage = kafkaTemplate.receive(domainEventChannel, 0, 0, Duration.ofSeconds(5));
+                    var creationMessage = kafkaTemplate.receive(domainEventChannel, 0, offset, Duration.ofSeconds(5));
 
                     Assertions.assertThat(creationMessage).isNotNull();
                     var creationMessageJsonNode = objectMapper.readTree(creationMessage.value());
@@ -106,7 +104,7 @@ public class DomainEventIntegrationTest extends AbstractIntegrationTest {
                     Assertions.assertThat(messageCorrelationId).isEqualTo(subscription.getId().toString());
                     Assertions.assertThat(createdEventType).isEqualTo(SubscriptionEventTypeEnum.CREATED.name());
 
-                    var stateChangedMessage = kafkaTemplate.receive(domainEventChannel, 0, 1, Duration.ofSeconds(5));
+                    var stateChangedMessage = kafkaTemplate.receive(domainEventChannel, 0, offset + 1, Duration.ofSeconds(5));
 
                     Assertions.assertThat(stateChangedMessage).isNotNull();
                     var stateChangedMessageJsonNode = objectMapper.readTree(stateChangedMessage.value());
