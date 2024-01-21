@@ -109,7 +109,7 @@ public class UserService {
     }
 
     private void encodePassword(UserEntity user, String password) {
-        var encodedPassword = securityFacade.encode(password);
+        var encodedPassword = securityFacade.encode(user.getUsername(), password);
         user.setPassword(encodedPassword);
     }
 }

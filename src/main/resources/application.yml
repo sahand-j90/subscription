@@ -65,6 +65,7 @@ subscription:
     jwt:
       secret-key: ${SECRET_KEY:sbnkF8TnP9hstUjTDMDMP2DnlxBZF0LMapajPSOoLqDPw6LHnf9nQvXlamuaTOskPJ5Xu65zfhQ/ngu/be3p9Q==}
       expiration: ${EXPIRATION:3600000}
+    hash-salt: ${PASS_SALT:as=gyzxqp-va}
 
   scheduling:
     subscription-batch-cron: ${SUBSCRIPTION_BATCH_CRON:0 */30 0-4 * * *}
