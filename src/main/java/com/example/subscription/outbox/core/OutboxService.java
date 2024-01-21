@@ -69,12 +69,12 @@ public class OutboxService {
     private String getSpanId() {
         return Optional.ofNullable(tracerService.getSpanIdAsLong())
                 .map(Object::toString)
-                .orElse(null);
+                .orElse("1");
     }
 
     private String getTraceId() {
         return Optional.ofNullable(tracerService.getTraceIdAsLong())
                 .map(Object::toString)
-                .orElse(null);
+                .orElse("1");
     }
 }
