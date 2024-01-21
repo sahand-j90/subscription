@@ -4,9 +4,9 @@ I have implemented the Outbox Pattern for achieving eventual consistency with cl
 ## Tools and Patterns Used
 ### Outbox Pattern
 I utilized a combination of Postgres as the RDBMS, Hibernate listener for creating domain events, an embedded Debezium engine as CDC, and Kafka as the message broker.
-- Every domain event has a correlationId, domain, eventType and payload properties.
-- Because of at least once nature of the CDC, I use a unique idempotent key.
-- To trace each domain event, it also has spanId and traceId properties
+- Every domain event has a **correlationId**, **domain**, **eventType** and **payload** properties.
+- Because of at least once nature of the CDC, I use a unique **idempotentKey**.
+- To trace each domain event, it also has **spanId** and **traceId** properties
 
 ### Integration Test
 For testing the Outbox Pattern integration, I leveraged Test Containers.
@@ -50,7 +50,7 @@ MapStruct is used for DTO mapping.
 # Scenario
 This is a simple subscription scenario for defining and managing user subscriptions
 ## Subscriber and Subscription
-There is tow main Domain Entities: Subscriber and Subscription. A subscriber can have multiple subscriptions.
+There is tow main Domain Entities: **Subscriber** and **Subscription**. A subscriber can have multiple subscriptions.
 Each subscription has a start date (from) and an end date (to)
 
 ### Each subscription has one of the following states:
@@ -65,7 +65,7 @@ The state of the subscription is processed at the time of its creation. A schedu
 - EXPIRED: When a subscription ends
 
 ## User
-There is also a user entity. A user can have ADMIN or NORMAL role. Only Admin users can define other users.
+There is also a user entity. A user can have **ADMIN** or **NORMAL** role. Only Admin users can define other users.
 
 
 # Run Application
