@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,12 +45,12 @@ public class OutboxIntegrationTest extends AbstractIntegrationTest {
     @Value("${subscription.domain-event-channel}")
     String domainEventChannel;
 
-    @Before
+    @BeforeEach
     public void before() {
         transactionalService.doInTransaction(() -> outboxRepository.deleteAll());
     }
 
-    @After
+    @AfterEach
     public void after() {
         transactionalService.doInTransaction(() -> outboxRepository.deleteAll());
     }
