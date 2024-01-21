@@ -47,7 +47,7 @@ Various profiles are used for enabling/disabling Swagger, as well as console and
 ### DTO Mapping
 MapStruct is used for DTO mapping.
 
-#Scenario
+# Scenario
 This is a simple subscription scenario for defining and managing user subscriptions
 ## Subscriber and Subscription
 There is tow main Domain Entity: Subscriber and Subscription. A subscriber can have multiple subscriptions.
