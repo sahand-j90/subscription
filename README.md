@@ -68,7 +68,7 @@ The state of the subscription is processed at the time of its creation. A schedu
 There is also a user entity. A user can have ADMIN or NORMAL role. Only Admin users can define other users.
 
 
-#Run Application
+# Run Application
 * **`docker compose -f docker-compose.yml up -d`**
 * swagger: 
   - [http://localhost:9090/swagger-ui/index.html]()
