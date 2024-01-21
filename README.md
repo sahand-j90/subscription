@@ -15,7 +15,7 @@ For testing the Outbox Pattern integration, I leveraged Test Containers.
 I integrated GitHub workflows for CI/CD. I have defined a simple branching strategy—develop and master. Every push into master triggers a workflow to run tests, build artifacts, create a Docker image, and push it to the Docker Hub registry. This ensures that when you run the application using the provided docker-compose, you have access to the latest version.
 
 ### Redis
-I implemented Redis for distributed locking and rate limiting.
+I use Redis for distributed locking and rate limiting.
 
 ### Documentation using Swagger
 The REST API documentation is generated using Swagger.
@@ -54,14 +54,14 @@ There is tow main Domain Entities: **Subscriber** and **Subscription**. A subscr
 Each subscription has a start date (from) and an end date (to)
 
 ### Each subscription has one of the following states:
-- FINISHED: Subscriptions that have expired
-- ACTIVE: When a subscription is activated
-- RESERVED: Subscriptions whose start time has not yet reached
 The state of the subscription is processed at the time of its creation. A scheduler also monitors the status of expired subscriptions.
+* FINISHED: Subscriptions that have expired
+* ACTIVE: Only one subscription can be in active state
+* RESERVED: Subscriptions whose start time has not yet reached
 
 ### There is three Domain Events:
 - CREATED: When a subscription is created
-- ACTIVATED: Only one subscription can be in active state
+- ACTIVATED: When a subscription is activated
 - EXPIRED: When a subscription ends
 
 ## User
