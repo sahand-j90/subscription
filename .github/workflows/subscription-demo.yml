@@ -20,7 +20,7 @@ jobs:
           java-version: '21'
 
       - name: Build artifact
-        run: mvn -e -U clean package spring-boot:repackage -DskipTests --file pom.xml
+        run: mvn -e -U clean package spring-boot:repackage --file pom.xml
 
       - name: Build and Push Docker Image
         env:
