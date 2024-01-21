@@ -1,0 +1,86 @@
+server:
+  port: 8008
+
+spring:
+
+  application:
+    name: SUBSCRIPTION
+
+  profiles:
+    include: ConsoleLogging
+
+  threads:
+    virtual:
+      enabled: true
+
+  datasource:
+    url: jdbc:postgresql://${subscription.rdbms.server}:${subscription.rdbms.port}/${subscription.rdbms.schema}
+    username: ${subscription.rdbms.username}
+    password: ${subscription.rdbms.pass}
+
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 1
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+    open-in-view: false
+
+  liquibase:
+    change-log: classpath:migration/master.xml
+    enabled: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+subscription:
+
+  domain-event-channel: DOMAIN_EVENTS
+
+  rdbms:
+    server: localhost
+    port: 5432
+    schema: test1
+    username: test1
+    pass: test1
+
+  kafka:
+    kafka-hosts: localhost:9092
+    partitions: 1
+    replicas: 1
+    timeout: 6000
+    fail-fast: true
+    retention: 1
+
+
+  security:
+    jwt:
+      secret-key: sbnkF8TnP9hstUjTDMDMP2DnlxBZF0LMapajPSOoLqDPw6LHnf9nQvXlamuaTOskPJ5Xu65zfhQ/ngu/be3p9Q==
+      expiration: 3600000
+    hash-salt: as=gyzxqp-va
+
+  scheduling:
+    subscription-batch-cron: 0 */30 0-4 * * *
+
+  cdc:
+    connector-class: io.debezium.connector.postgresql.PostgresConnector
+    offset-file: ./offset/offset.dat
+    flush-interval: 6000
+    outbox-table: public.TBL_OUTBOX
+
+logging:
+  level:
+    root: info
+
+springdoc:
+  api-docs:
+    enabled: false
+
