@@ -19,7 +19,7 @@ public class ChangePasswordValidation implements Validation {
     @Override
     public void validate() {
 
-        var isMatched = securityFacade.matchPassword(rowPassword, user.getPassword());
+        var isMatched = securityFacade.matchPassword(user.getUsername(), rowPassword, user.getPassword());
 
         if (!isMatched) {
             throw new BizException(Errors.INVALID_CREDENTIALS_EXCEPTION);

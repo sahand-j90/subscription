@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RateIntervalUnit;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,7 +22,7 @@ public class SecurityFacade {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
-    private final PasswordEncoder passwordEncoder;
+    private final EncoderService encoderService;
     private final DistributedLock distributedLock;
 
     public String credentialsLogin(String username, String password) {
@@ -40,12 +39,12 @@ public class SecurityFacade {
         return jwtTokenService.generateToken(AuthenticationFlowEnum.CREDENTIALS, username, authorities);
     }
 
-    public String encode(String password) {
-        return passwordEncoder.encode(password);
+    public String encode(String username, String password) {
+        return encoderService.encode(username, password);
     }
 
-    public boolean matchPassword(String rowPassword, String encodedPassword) {
-        return passwordEncoder.matches(rowPassword, encodedPassword);
+    public boolean matchPassword(String username, String rowPassword, String encodedPassword) {
+        return encoderService.matchPassword(username, rowPassword, encodedPassword);
     }
 
 }
